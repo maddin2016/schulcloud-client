@@ -11,7 +11,8 @@ import {
 	File,
 	Textarea,
 	ReactSelect,
-	Form
+	Form,
+	validators
 } from '../../core/helpers/form';
 
 require('../styles/invite.scss');
@@ -22,8 +23,6 @@ class Invite extends React.Component {
 	}
 
 	render() {
-		const options = [{ value: 'one', label: 'One' },
-			{ value: 'two', label: 'Two' }];
 		return (
 			<Layout className="route-signup">
 				<div className="container">
@@ -64,6 +63,7 @@ class Invite extends React.Component {
 											validations="isEmail"
 											validationError="This is not an email"
 											layout="vertical"
+											required
 										/>
 									</div>
 								</div>
@@ -76,11 +76,17 @@ class Invite extends React.Component {
 											type="password"
 											layout="vertical"
 											validations={{
-												matchRegexp: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&\,\#\>\<\.\=\§\"\/\(\)\~\+\:\;\.\\\]\[\_\-\^\{\}\`\'\|])[A-Za-z\d$@$!%*?&\>\<\.\§\"\/\(\)\~\#\+\:\;\.\\\]\[\_\=\,\-\^\{\}\`\'\|]{8,}/
+												matchRegexp: validators.password
 											}}
-											validationError="Your password does not match the requirements"
+											validationError="Ihr Passwort stimmt nicht mit den Anforderungen überein"
 											required
 										/>
+										<p className="text-muted">Ihr Passwort muss folgendes enthalten:</p>
+										<ul className="text-muted">
+											<li>Mindestens 8 Zeichen</li>
+											<li>Groß- und Kleinschreibung</li>
+											<li>Mindestens eine Zahl und Sonderzeichen</li>
+										</ul>
 									</div>
 								</div>
 
@@ -92,7 +98,7 @@ class Invite extends React.Component {
 											type="password"
 											layout="vertical"
 											validations="equalsField:password"
-											validationError="Your password does not match"
+											validationError="Ihr Passwort ist ungleich"
 											required
 										/>
 									</div>
@@ -101,16 +107,10 @@ class Invite extends React.Component {
 							</Form>
 
 							<p>Sie erhalten von uns nach dem Abschluss Ihrer Registrierung
-								eine E-Mail mit Ihren Anmeldedaten (Nutzername und Passwort).</p>
-
-							<p>Ihr Passwort können Sie danach jederzeit ändern.</p>
-
+								eine E-Mail mit Ihren Benutzernamen.</p>
 							<hr />
 
-							<p>Im <b>nächsten Schritt</b> können Sie Informationen über die Schule
-								und verwendete Systeme eintragen:</p>
-
-							<button className="btn btn-success">Fortsetzen</button>
+							<button className="btn btn-success">Anmelden</button>
 						</div>
 					</div>
 				</div>
