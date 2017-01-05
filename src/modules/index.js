@@ -16,6 +16,7 @@ import ActiveStudents from './active-students';
 import ErrorPage from './error-page';
 import Tools from './tools';
 import Administration from './administration';
+import Invite from './invite';
 
 export default {
 	Core,
@@ -32,5 +33,6 @@ export default {
 	ErrorPage,
 	Tools,
     Static,
-	Signup
+	Signup,
+	Invite
 };
