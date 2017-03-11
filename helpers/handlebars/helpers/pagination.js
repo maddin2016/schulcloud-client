@@ -8,7 +8,7 @@ module.exports = (userSettings, options) => {
         showNext: true,
         baseUrl: '', // has to end with = e.g. search?q=css&page=
         currentPage: 1
-    }
+    };
 
     const settings = Object.assign({}, defaultSettings, userSettings);
     settings.baseUrl = decodeURI(settings.baseUrl);
@@ -25,7 +25,7 @@ module.exports = (userSettings, options) => {
         }
 
         return settings.baseUrl + numString;
-    }
+    };
 
     const addItem = (item) => {
         item.url = getUrl(item.num);

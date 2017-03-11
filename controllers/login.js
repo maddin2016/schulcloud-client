@@ -15,7 +15,7 @@ const getSelectOptions = (req, service, query) => {
     }).then(data => {
         return data.data;
     });
-}
+};
 
 
 // Login
@@ -62,7 +62,6 @@ router.post('/login/', function (req, res, next) {
 
     const login = (data) => {
         return api(req).post('/authentication', {json: data}).then(data => {
-            console.log(data); // TODO: GGF PARSEN?
             res.cookie('jwt', data.accessToken);
             return res.sendStatus(200);
         }).catch(_ => {

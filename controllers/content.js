@@ -31,14 +31,14 @@ router.get('/', function (req, res, next) {
         const urlParts = url.parse(req.originalUrl, true);
         urlParts.query.p = '{{page}}';
         delete urlParts.search;
-        const baseUrl = url.format(urlParts)
+        const baseUrl = url.format(urlParts);
 
         const pagination = {
             currentPage,
             numPages: Math.ceil(meta.page.total / itemsPerPage),
             maxItems: 10,
             baseUrl
-        }
+        };
 
         const results = data.map(result => {
             return result.attributes;

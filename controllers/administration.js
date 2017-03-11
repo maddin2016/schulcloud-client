@@ -15,7 +15,7 @@ const getSelectOptions = (req, service, query) => {
     }).then(data => {
         return data.data;
     });
-}
+};
 
 
 const getTableActions = (item, path) => {
@@ -44,8 +44,8 @@ const getCreateHandler = (service) => {
         }).catch(err => {
             next(err);
         });
-    }
-}
+    };
+};
 
 
 const getUpdateHandler = (service) => {
@@ -58,8 +58,8 @@ const getUpdateHandler = (service) => {
         }).catch(err => {
             next(err);
         });
-    }
-}
+    };
+};
 
 
 const getDetailHandler = (service) => {
@@ -69,7 +69,7 @@ const getDetailHandler = (service) => {
         }).catch(err => {
             next(err);
         });
-    }
+    };
 };
 
 
@@ -81,7 +81,7 @@ const getDeleteHandler = (service) => {
             next(err);
         });
     };
-}
+};
 
 
 // secure routes
@@ -137,7 +137,7 @@ router.get('/courses', function (req, res, next) {
                 currentPage,
                 numPages: Math.ceil(data.total / itemsPerPage),
                 baseUrl: '/administration/courses/?p={{page}}'
-            }
+            };
 
             res.render('administration/courses', {title: 'Administration: Kurse', head, body, classes, teachers, pagination});
         });
@@ -185,7 +185,7 @@ router.get('/classes', function (req, res, next) {
                 currentPage,
                 numPages: Math.ceil(data.total / itemsPerPage),
                 baseUrl: '/administration/classes/?p={{page}}'
-            }
+            };
 
             res.render('administration/classes', {title: 'Administration: Klassen', head, body, teachers, pagination});
         });
@@ -231,7 +231,7 @@ router.get('/teachers', function (req, res, next) {
             currentPage,
             numPages: Math.ceil(data.total / itemsPerPage),
             baseUrl: '/administration/teachers/?p={{page}}'
-        }
+        };
 
         res.render('administration/teachers', {title: 'Administration: Lehrer', head, body, pagination});
     });
@@ -276,7 +276,7 @@ router.get('/students', function (req, res, next) {
             currentPage,
             numPages: Math.ceil(data.total / itemsPerPage),
             baseUrl: '/administration/students/?p={{page}}'
-        }
+        };
 
         res.render('administration/students', {title: 'Administration: Schüler', head, body, pagination});
     });

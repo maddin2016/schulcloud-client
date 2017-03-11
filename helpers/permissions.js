@@ -9,7 +9,7 @@ const userHasPermission = (user, permissions) => {
     return permissions.every((permission) => {
         return userPermissions.includes(permission);
     });
-}
+};
 
 module.exports = {
     userHasPermission,

@@ -141,7 +141,7 @@ router.post('/register/', function (req, res, next) {
 
     createUser(req, req.body)
         .then(user => {
-            return createAccount(req, {username, password, userId: user._id})
+            return createAccount(req, {username, password, userId: user._id});
         })
         .then(_ => {
             // do login at this point already so we don't need to fuck around with passwords

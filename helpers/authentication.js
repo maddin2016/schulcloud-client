@@ -5,7 +5,7 @@ const permissionsHelper = require('./permissions');
 
 const isJWT = (req) => {
     return (req && req.cookies && req.cookies.jwt);
-}
+};
 
 const isAuthenticated = (req) => {
     if(!isJWT(req)) {
@@ -20,7 +20,7 @@ const isAuthenticated = (req) => {
     }).catch(_ => {
         return false;
     });
-}
+};
 
 const authChecker = (req, res, next) => {
     isAuthenticated(req)
@@ -41,7 +41,7 @@ const authChecker = (req, res, next) => {
                 next(error);
             }
         });
-}
+};
 
 const populateCurrentUser = (req, res) => {
     let payload = {};
@@ -55,11 +55,11 @@ const populateCurrentUser = (req, res) => {
             res.locals.currentUser = data;
             res.locals.currentSchool = res.locals.currentUser.schoolId; // TODO: consider school object if any advantages
             return data;
-        })
+        });
     }
 
     return Promise.resolve();
-}
+};
 
 
 const restrictSidebar = (req, res) => {
@@ -68,7 +68,7 @@ const restrictSidebar = (req, res) => {
 
         return permissionsHelper.userHasPermission(res.locals.currentUser, item.permission);
     });
-}
+};
 
 
 module.exports = {
@@ -76,4 +76,4 @@ module.exports = {
     authChecker,
     isAuthenticated,
     populateCurrentUser
-}
+};

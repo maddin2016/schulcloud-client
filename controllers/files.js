@@ -94,7 +94,7 @@ router.get('/file', function (req, res, next) {
                 res.end(awsFile, 'binary');
             });
         }).catch(err => {
-            console.error(err);
+            res.sendStatus(500);
         });
 });
 
@@ -116,7 +116,7 @@ router.post('/file', function (req, res, next) {
         .then(signedUrl => {
             res.json({signedUrl});
         }).catch(err => {
-        console.error(err);
+        res.sendStatus(500);
     });
 });
 
@@ -138,9 +138,9 @@ router.delete('/file', function (req, res, next) {
         qs: data
     })
     .then(_ => {
-        res.sendStatus(200)
+        res.sendStatus(200);
     }).catch(err => {
-        console.error(err);
+        res.sendStatus(500);
     });
 });
 
@@ -151,10 +151,6 @@ router.post('/directory', function (req, res, next) {
     const {name, dir} = req.body;
     const storageContext = path.join('users/' + res.locals.currentUser._id, dir);
 
-
-    console.log(storageContext);
-
-
     api(req).post('/fileStorage/directories', {
         json: {
             storageContext,
@@ -163,7 +159,7 @@ router.post('/directory', function (req, res, next) {
     }).then(_ => {
         res.sendStatus(200);
     }).catch(err => {
-        console.error(err);
+        res.sendStatus(500);
     });
 });
 
