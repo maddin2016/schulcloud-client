@@ -1,0 +1,33 @@
+<table class="{{#if class}}{{class}}{{else}}table table-hover table-bordered{{/if}}">
+    {{#if head}}
+        <thead>
+            <tr>
+                {{#each head}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+        </thead>
+    {{/if}}
+
+    {{#if body}}
+        <tbody>
+            {{#each body}}
+                <tr>
+                    {{#each this}}
+                        {{#ifArray this}}
+                            <td>
+                                {{#each this}}
+                                    <a class="btn btn-secondary btn-sm {{this.class}}" href="{{this.link}}">
+                                        <i class="fa fa-{{this.icon}}"></i> {{this.label}}
+                                    </a>
+                                {{/each}}
+                            </td>
+                        {{else}}
+                            <td>{{this}}</td>
+                        {{/ifArray}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    {{/if}}
+</table>

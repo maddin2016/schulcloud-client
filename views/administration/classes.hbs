@@ -1,0 +1,51 @@
+{{#extend "administration/administration"}}
+    {{#content "page"}}
+        <div class="route-administration">
+            <section class="section-school section-default">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12 no-padding">
+                            {{> "lib/components/notification"}}
+
+                            {{> "lib/components/table" head=head body=body}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{> "lib/components/pagination" settings=pagination }}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 no-padding">
+                            <button type="submit" class="btn btn-primary btn-add">
+                                Klasse hinzufügen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{#embed "lib/components/modal" action="/administration/classes/" method="post" class="edit-modal"}}
+                    {{#content "fields"}}
+                        <input name="_id" type="hidden" />
+
+                        <input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
+
+                        <div class="form-group">
+                            <label>Name der Klasse</label>
+                            <input class="form-control" name="name" type="text" placeholder="10a" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Klassenlehrer</label>
+
+                            <select name="teacherIds" required multiple>
+                                {{#each teachers}}
+                                    <option value="{{this._id}}">{{this.lastName}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    {{/content}}
+                {{/embed}}
+
+            </section>
+        </div>
+    {{/content}}
+{{/extend}}
