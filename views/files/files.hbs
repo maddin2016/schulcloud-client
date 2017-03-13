@@ -12,21 +12,23 @@
     {{#content "page"}}
 
         <div class="route-files">
-            <section class="section-upload">
-                <div class="container-fluid">
-                    <div class="row">
-                        <form class="form-upload" action="/files/upload/">
-                            <span><i class="fa fa-cloud-upload"></i> Dateien zum Hochladen ablegen.</span>
-                        </form>
-                        <div class="progress-bar">
-                            <div class="progress">
-                                <span class="percent"></span>
-                                <div class="bar" style="width:0%">&nbsp;</div>
+            {{#if canUploadFile}}
+                <section class="section-upload">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <form class="form-upload" action="/files/upload/">
+                                <span><i class="fa fa-cloud-upload"></i> Dateien zum Hochladen ablegen.</span>
+                            </form>
+                            <div class="progress-bar">
+                                <div class="progress">
+                                    <span class="percent"></span>
+                                    <div class="bar" style="width:0%">&nbsp;</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            {{/if}}
 
             <section class="section-title">
                 <div class="container-fluid">
@@ -34,7 +36,7 @@
                         <div class="col-sm-12 no-padding">
                             <h5>
                                 {{#each breadcrumbs}}
-                                    <a class="{{#if @last}}active{{/if}}" href="?dir={{this.path}}">{{this.label}}</a><span> / </span>
+                                    <a class="{{#if @last}}active{{/if}}" href="{{this.url}}">{{this.label}}</a><span> / </span>
                                 {{/each}}
                             </h5>
                         </div>
@@ -45,17 +47,17 @@
             <section class="directories">
                 <div class="container-fluid">
                     <div class="row">
+                        {{#each directories}}
+                            <div class="col-sm-6 col-xs-12 col-md-4">
+                                <a class="card card-block folder" href="{{this.url}}">
+                                    <strong class="card-title-directory">
+                                        <i class="fa fa-folder" aria-hidden="true"></i> {{this.name}}
+                                    </strong>
+                                </a>
+                            </div>
+                        {{/each}}
 
-                            {{#each directories}}
-                                <div class="col-sm-6 col-xs-12 col-md-4">
-                                    <a class="card card-block folder" href="?dir={{this.path}}">
-                                        <strong class="card-title-directory">
-                                            <i class="fa fa-folder" aria-hidden="true"></i> {{this.name}}
-                                        </strong>
-                                    </a>
-                                </div>
-                            {{/each}}
-
+                        {{#if canCreateDir}}
                             <div class="col-sm-6 col-xs-12 col-md-4">
                                 <div data-toggle="modal">
                                     <div class="card card-block folder create-directory">
@@ -65,8 +67,8 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
+                        {{/if}}
+                    </div>
                 </div>
             </section>
 
@@ -88,9 +90,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="card-text">
-                                                    <a href="/files/get?download=1&file={{this.file}}" target="_blank">
-                                                        <i class="fa fa-cloud-download"></i>
-                                                    </a>
+                                                    <a href="/files/file?download=1&file={{this.file}}" target="_blank"><i class="fa fa-cloud-download"></i></a>
                                                     <a href="/files/file/"
                                                        target="_blank"
                                                        data-method="delete"

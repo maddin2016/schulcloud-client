@@ -1,0 +1,39 @@
+{{#extend "lib/loggedin"}}
+
+    {{#content "styles" mode="append"}}
+        <link rel="stylesheet" href="/styles/courses/overview.css"/>
+    {{/content}}
+
+    {{#content "page"}}
+
+        <section class="section-courses">
+
+            <div class="container-fluid">
+                <div class="row results">
+                    <div class="card-columns">
+                        {{#each courses}}
+                            <div class="card">
+                                <div class="card-block">
+                                    <h4 class="card-title">
+                                        <a href="{{this.url}}">
+                                            {{this.name}}
+                                        </a>
+                                    </h4>
+                                    <p class="card-text">{{truncate this.description}}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Di 15:00, Do 13:30 | Raum H1.03</small>
+                                </div>
+                            </div>
+                        {{else}}
+                            <p class="text-muted text-center">
+                                <span>Keine Kurse.</span>
+                            </p>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    {{/content}}
+{{/extend}}

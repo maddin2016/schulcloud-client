@@ -182,6 +182,14 @@ footer {
 .topbar {
     text-align: right;
 
+    .breadcrumb {
+        float: left;
+        padding: 0px;
+        margin: 0px;
+        background: transparent;
+        line-height: 46px;
+    }
+
     .avatar {
         border-radius: 50%;
         height: 32px;

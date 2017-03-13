@@ -73,6 +73,9 @@ $(document).ready(function() {
         // fields
         $('[name]', $form).not('[data-force-value]').each(function() {
             var value = (data.fields || {})[$(this).prop('name')] || '';
+
+            console.log(value);
+
             switch($(this).prop("type")) {
                 case "radio":
                 case "checkbox":
@@ -81,7 +84,7 @@ $(document).ready(function() {
                     });
                     break;
                 default:
-                    $(this).val(value);
+                    $(this).val(value).trigger("chosen:updated");
             }
         });
     };

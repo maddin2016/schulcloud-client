@@ -36,9 +36,9 @@
                         <div class="form-group">
                             <label>Klassenlehrer</label>
 
-                            <select name="teacherIds" required multiple>
+                            <select name="teacherIds" required multiple data-placeholder="Lehrer auswählen">
                                 {{#each teachers}}
-                                    <option value="{{this._id}}">{{this.lastName}}</option>
+                                    <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.lastName}}</option>
                                 {{/each}}
                             </select>
                         </div>

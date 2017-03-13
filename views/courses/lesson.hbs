@@ -1,0 +1,26 @@
+{{#extend "lib/loggedin"}}
+
+    {{#content "styles" mode="append"}}
+        <link rel="stylesheet" href="/styles/courses/course.css"/>
+    {{/content}}
+
+    {{#content "page"}}
+
+        <section class="section-course">
+            <div class="row description">
+                <div class="col-sm-12">
+                    <p class="lead">{{description}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                {{#each contents}}
+                    <div class="col-sm-6">
+                        {{> (lookup . 'component') this}}
+                    </div>
+                {{/each}}
+            </div>
+
+        </section>
+    {{/content}}
+{{/extend}}

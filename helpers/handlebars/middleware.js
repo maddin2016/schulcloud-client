@@ -8,7 +8,11 @@ const makeActive = (items, currentUrl) => {
             item.class = 'active';
             item.childActive = true;
         } else if(currentUrl.match(regex)) {
-            item.class = 'child-active';
+            if(item.children) {
+                item.class = 'child-active';
+            } else {
+                item.class = 'active';
+            }
             item.childActive = true;
         }
 
@@ -28,7 +32,7 @@ module.exports = (req, res, next) => {
         icon: 'th-large',
         link: '/dashboard/',
     }, {
-        name: 'Kurse',
+        name: 'Fächer / Kurse',
         icon: 'graduation-cap',
         link: '/courses/'
     }, {
@@ -36,9 +40,19 @@ module.exports = (req, res, next) => {
         icon: 'table',
         link: '/calendar/'
     }, {
-        name: 'Dateien',
+        name: 'Meine Dateien',
         icon: 'folder-open',
-        link: '/files/'
+        link: '/files/',
+        children: [
+            {
+                name: 'Kurse',
+                link: '/files/courses/'
+            },
+            {
+                name: 'Klassen',
+                link: '/files/classes/'
+            },
+        ]
     }, {
         name: 'Materialien',
         icon: 'search',

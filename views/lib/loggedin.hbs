@@ -37,6 +37,17 @@
 
         <section class="content-wrapper">
             <nav class="topbar navbar">
+
+                {{#if breadcrumb}}
+                    <ol class="breadcrumb">
+                        {{#each breadcrumb}}
+                            <li class="breadcrumb-item {{this.class}}">
+                                <a href="{{this.url}}">{{this.title}}</a>
+                            </li>
+                        {{/each}}
+                    </ol>
+                {{/if}}
+
                 <ul class="nav navbar-nav float-xs-right">
                     <li class="nav-item">
                         <div class="btn-group">

@@ -9,7 +9,7 @@ const authHelper = require('../helpers/authentication');
 const permissionsHelper = require('../helpers/permissions');
 
 
-const getSelectOptions = (req, service, query) => {
+const getSelectOptions = (req, service, query, values = []) => {
     return api(req).get('/' + service, {
         qs: query
     }).then(data => {
