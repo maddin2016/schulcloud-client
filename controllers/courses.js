@@ -53,11 +53,8 @@ router.get('/:courseId/:lessonId', function (req, res, next) {
         api(req).get('/courses/' + req.params.courseId),
         api(req).get('/lessons/' + req.params.lessonId)
     ]).then(([course, lesson]) => {
-
         // decorate contents
-        console.log(lesson);
         lesson.contents = (lesson.contents || []).map(block => {
-            console.log(block);
             return Object.assign(block, {
                 component: 'courses/components/content-text',
                 markup: marked(block.content || '')

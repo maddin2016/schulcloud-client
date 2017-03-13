@@ -14,7 +14,7 @@ const handlebarsWax = require('handlebars-wax');
 const app = express();
 
 // view engine setup
-const handlebarsHelper = require('./helpers/handlebars')
+const handlebarsHelper = require('./helpers/handlebars');
 const wax = handlebarsWax(handlebars)
     .partials(path.join(__dirname, 'views/**/*.{hbs,js}'))
     .helpers(layouts)

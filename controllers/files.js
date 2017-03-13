@@ -37,7 +37,7 @@ const getBreadcrumbs = (req, {dir = '', baseLabel = '', basePath = '/files/'} = 
     }
 
     return breadcrumbs;
-}
+};
 
 const getStorageContext = (req, res, options = {}) => {
     const currentDir = options.dir || req.query.dir || '';
@@ -50,7 +50,7 @@ const getStorageContext = (req, res, options = {}) => {
     }
 
     return path.join(storageContext, currentDir);
-}
+};
 
 
 const FileGetter = (req, res, next) => {
@@ -97,7 +97,7 @@ const getScopeDirs = (req, res, scope) => {
             return Object.assign(record, {
                 url: '/files/' + scope + '/' + record._id
             });
-        })
+        });
     });
 };
 
