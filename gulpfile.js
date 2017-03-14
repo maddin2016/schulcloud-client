@@ -1,14 +1,14 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-const minifycss = require('gulp-csso');
 const rimraf = require('gulp-rimraf');
 const uglify = require('gulp-uglify');
-const pump = require('pump');
-var gutil = require('gulp-util');
-
+const cleanCSS = require('clean-css');
+const map = require('vinyl-map');
+const imagemin = require('gulp-imagemin');
 
 const buildImages = () => {
     return gulp.src('./static/images/**/*.*')
+        .pipe(imagemin())
         .pipe(gulp.dest('./build/images'))
 };
 
@@ -19,9 +19,13 @@ gulp.task('watch-images', function () {
 });
 
 const buildStyles = () => {
+    const minify = map(function (buff, filename) {
+        return new cleanCSS().minify(buff.toString()).styles;
+    });
+
     return gulp.src('./static/styles/**/*.{css,sass,scss}')
         .pipe(sass())
-        .pipe(minifycss())
+        .pipe(minify)
         .pipe(gulp.dest('./build/styles'))
 };
 
@@ -45,7 +49,7 @@ gulp.task('watch-fonts', function () {
 
 const buildScripts = (cb) => {
     gulp.src('./static/scripts/**/*.js')
-        .pipe(uglify().on('error', gutil.log))
+        .pipe(uglify())
         .pipe(gulp.dest('./build/scripts'))
 };
 

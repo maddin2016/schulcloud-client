@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "body-parser": "~1.16.0",
+    "compression": "^1.6.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
@@ -24,13 +25,17 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "clean-css": "^4.0.8",
     "eslint": "^3.17.1",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.0.3",
     "gulp-csso": "^2.0.0",
+    "gulp-imagemin": "^3.1.1",
     "gulp-rimraf": "^0.2.1",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.8",
-    "pump": "^1.0.2"
+    "pump": "^1.0.2",
+    "vinyl-map": "^1.0.2"
   }
 }

@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 
 
 // template stuff
@@ -12,6 +13,7 @@ const layouts = require("handlebars-layouts");
 const handlebarsWax = require('handlebars-wax');
 
 const app = express();
+app.use(compression());
 
 // view engine setup
 const handlebarsHelper = require('./helpers/handlebars');
@@ -26,6 +28,8 @@ app.engine("hbs", wax.engine);
 app.set("view engine", "hbs");
 
 app.set('views', path.join(__dirname, 'views'));
+
+app.set('view cache', true);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

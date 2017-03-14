@@ -46,10 +46,12 @@ module.exports = (req, res, next) => {
         children: [
             {
                 name: 'Kurse',
+                icon: 'folder-open-o',
                 link: '/files/courses/'
             },
             {
                 name: 'Klassen',
+                icon: 'folder-open-o',
                 link: '/files/classes/'
             },
         ]
@@ -67,18 +69,22 @@ module.exports = (req, res, next) => {
         children: [
             {
                 name: 'Kurse',
+                icon: 'users',
                 link: '/administration/courses/'
             },
             {
                 name: 'Klassen',
+                icon: 'users',
                 link: '/administration/classes/'
             },
             {
                 name: 'Lehrer',
+                icon: 'users',
                 link: '/administration/teachers/'
             },
             {
                 name: 'Schüler',
+                icon: 'users',
                 link: '/administration/students/'
             }
         ]
