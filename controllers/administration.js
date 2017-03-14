@@ -119,11 +119,13 @@ router.get('/courses', function (req, res, next) {
 
         const classesPromise = getSelectOptions(req, 'classes');
         const teachersPromise = getSelectOptions(req, 'users', {roles: ['teacher']});
+        const studentsPromise = getSelectOptions(req, 'users', {roles: ['student']});
 
         Promise.all([
             classesPromise,
-            teachersPromise
-        ]).then(([classes, teachers]) => {
+            teachersPromise,
+            studentsPromise
+        ]).then(([classes, teachers, students]) => {
             const body = data.data.map(item => {
                 return [
                     item.name,
@@ -139,7 +141,7 @@ router.get('/courses', function (req, res, next) {
                 baseUrl: '/administration/courses/?p={{page}}'
             };
 
-            res.render('administration/courses', {title: 'Administration: Kurse', head, body, classes, teachers, pagination});
+            res.render('administration/courses', {title: 'Administration: Kurse', head, body, classes, teachers, students, pagination});
         });
     });
 });
@@ -169,10 +171,12 @@ router.get('/classes', function (req, res, next) {
         ];
 
         let teachersPromise = getSelectOptions(req, 'users', {roles: ['teacher']});
+        let studentsPromise = getSelectOptions(req, 'users', {roles: ['student']});
 
         Promise.all([
-            teachersPromise
-        ]).then(([teachers]) => {
+            teachersPromise,
+            studentsPromise
+        ]).then(([teachers, students]) => {
             const body = data.data.map(item => {
                 return [
                     item.name,
@@ -187,7 +191,7 @@ router.get('/classes', function (req, res, next) {
                 baseUrl: '/administration/classes/?p={{page}}'
             };
 
-            res.render('administration/classes', {title: 'Administration: Klassen', head, body, teachers, pagination});
+            res.render('administration/classes', {title: 'Administration: Klassen', head, body, teachers, students, pagination});
         });
     });
 });

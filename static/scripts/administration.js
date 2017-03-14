@@ -72,10 +72,7 @@ $(document).ready(function() {
 
         // fields
         $('[name]', $form).not('[data-force-value]').each(function() {
-            var value = (data.fields || {})[$(this).prop('name')] || '';
-
-            console.log(value);
-
+            var value = (data.fields || {})[$(this).prop('name').replace('[]', '')] || '';
             switch($(this).prop("type")) {
                 case "radio":
                 case "checkbox":
@@ -114,7 +111,7 @@ $(document).ready(function() {
 
         options.success = function() {
             $.showNotification('Speichern erfolgreich!', 'success');
-            reloadRecords();
+            //reloadRecords();
         }
 
         $.ajax(options);

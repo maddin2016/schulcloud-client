@@ -17,14 +17,6 @@ $(document).ready(function(){
         "disable_search": true
     });
 
-    $.fn.serializeObject = function() {
-        const data = {};
-        $(this.serializeArray()).each(function(index, obj){
-            data[obj.name] = obj.value;
-        });
-        return data;
-    }
-
     // notification stuff
     var $notification = $('.notification');
     var $notificationContent = $notification.find('.notification-content')

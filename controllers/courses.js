@@ -12,7 +12,14 @@ const authHelper = require('../helpers/authentication');
 router.use(authHelper.authChecker);
 
 router.get('/', function (req, res, next) {
-    api(req).get('/courses/').then(courses => {
+    api(req).get('/courses/', {
+        qs: {
+            $or: [
+                {userIds: res.locals.currentUser._id},
+                {teacherIds: res.locals.currentUser._id}
+            ]
+        }
+    }).then(courses => {
         courses = courses.data.map(course => {
             course.url = '/courses/' + course._id;
             return course;
