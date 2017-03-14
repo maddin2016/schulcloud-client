@@ -8,7 +8,7 @@ $(document).ready(function() {
     var loadSystems = function(schoolId) {
         $systems.empty();
         $.getJSON('/login/systems/' + schoolId, function(systems) {
-            systems.forEach(system => {
+            systems.forEach(function(system) {
                 $systems.append('<option value="' + system._id + '">' + system.type + '</option>');
             });
             $systems.trigger('chosen:updated');

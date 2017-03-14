@@ -14,7 +14,7 @@ $(document).ready(function() {
                 callback(events);
             });
         },
-        eventRender: (event, element) => {
+        eventRender: function (event, element) {
             if(event.cancelled) {
                 element.addClass('fc-event-cancelled');
             }
@@ -24,7 +24,7 @@ $(document).ready(function() {
             right: 'month,agendaWeek,agendaDay prev,today,next'
         },
         locale: 'de',
-        viewRender: (view, element) => {
+        viewRender: function (view, element) {
             location.hash = view.name;
         }
     });

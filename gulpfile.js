@@ -3,6 +3,9 @@ const sass = require('gulp-sass');
 const minifycss = require('gulp-csso');
 const rimraf = require('gulp-rimraf');
 const uglify = require('gulp-uglify');
+const pump = require('pump');
+var gutil = require('gulp-util');
+
 
 const buildImages = () => {
     return gulp.src('./static/images/**/*.*')
@@ -40,10 +43,12 @@ gulp.task('watch-fonts', function () {
 });
 
 
-const buildScripts = () => {
-    return gulp.src('./static/scripts/**/*.js')
+const buildScripts = (cb) => {
+    gulp.src('./static/scripts/**/*.js')
+        .pipe(uglify().on('error', gutil.log))
         .pipe(gulp.dest('./build/scripts'))
 };
+
 
 gulp.task('watch-scripts', function () {
     return gulp.watch('./static/scripts/**/*.js', function (cb) {

@@ -16,7 +16,7 @@ $(document).ready(function() {
         $.ajax({
             url: $(this).prop('action') + id,
             method: 'PATCH',
-            data,
+            data: data,
             success: function(result) {
                 $.showNotification('Speichern erfolgreich!', 'success');
                 reloadRecords();
@@ -91,21 +91,21 @@ $(document).ready(function() {
 
         var data = $(this).serializeObject();
 
-        const id = data._id;
+        var id = data._id;
         delete data._id;
 
-        let options;
+        var options;
         if(id) {
             options = {
                 url: $form.prop('action') + id,
                 method: 'PATCH',
-                data
+                data: data
             }
         } else {
             options = {
                 url: $form.prop('action'),
                 method: 'POST',
-                data
+                data: data
             }
         }
 
