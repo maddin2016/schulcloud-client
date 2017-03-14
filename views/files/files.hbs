@@ -36,7 +36,8 @@
                         <div class="col-sm-12 no-padding">
                             <h5>
                                 {{#each breadcrumbs}}
-                                    <a class="{{#if @last}}active{{/if}}" href="{{this.url}}">{{this.label}}</a><span> / </span>
+                                    <a class="{{#if @last}}active{{/if}}"
+                                       href="{{this.url}}">{{this.label}}</a><span> / </span>
                                 {{/each}}
                             </h5>
                         </div>
@@ -45,67 +46,63 @@
             </section>
 
             <section class="directories">
-                <div class="container-fluid">
-                    <div class="row">
-                        {{#each directories}}
-                            <div class="col-sm-6 col-xs-12 col-md-4">
-                                <a class="card card-block folder" href="{{this.url}}">
-                                    <strong class="card-title-directory">
-                                        <i class="fa fa-folder" aria-hidden="true"></i> {{this.name}}
-                                    </strong>
-                                </a>
-                            </div>
-                        {{/each}}
+                <div class="row">
+                    {{#each directories}}
+                        <div class="col-sm-6 col-xs-12 col-md-4">
+                            <a class="card card-block folder" href="{{this.url}}">
+                                <strong class="card-title-directory">
+                                    <i class="fa fa-folder" aria-hidden="true"></i> {{this.name}}
+                                </strong>
+                            </a>
+                        </div>
+                    {{/each}}
 
-                        {{#if canCreateDir}}
-                            <div class="col-sm-6 col-xs-12 col-md-4">
-                                <div data-toggle="modal">
-                                    <div class="card card-block folder create-directory">
-                                        <strong class="card-title-directory">
-                                            <i class="fa fa-folder" aria-hidden="true"></i> Neuen Ordner erstellen ...
-                                        </strong>
-                                    </div>
+                    {{#if canCreateDir}}
+                        <div class="col-sm-6 col-xs-12 col-md-4">
+                            <div data-toggle="modal">
+                                <div class="card card-block folder create-directory">
+                                    <strong class="card-title-directory">
+                                        <i class="fa fa-folder" aria-hidden="true"></i> Neuen Ordner erstellen ...
+                                    </strong>
                                 </div>
                             </div>
-                        {{/if}}
-                    </div>
+                        </div>
+                    {{/if}}
                 </div>
             </section>
 
             <section class="files">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="row">
-                            {{#each files}}
-                                <div class="col-sm-6 col-xs-12 col-md-4">
-                                    <div class="card file">
-                                        <div class="openFile">
-                                            <div class="card-block">
-                                                <div class="card-title">
-                                                    <div class="col-sm-3 no-padding">
-                                                        <div class="file-preview" style="background-image: url({{this.thumbnail}})"></div>
-                                                    </div>
-                                                    <a href="/files/file?file={{this.file}}" target="_blank">
-                                                        {{this.name}}
-                                                    </a>
-                                                </div>
-                                                <div class="card-text">
-                                                    <a href="/files/file?download=1&file={{this.file}}" target="_blank"><i class="fa fa-cloud-download"></i></a>
-                                                    <a href="/files/file/"
-                                                       target="_blank"
-                                                       data-method="delete"
-                                                       data-file-name="{{this.name}}"
-                                                       data-file-path="{{this.path}}">
-                                                        <i class="fa fa-trash-o"></i>
-                                                    </a>
-                                                </div>
+                <div class="row">
+                    {{#each files}}
+                        <div class="col-sm-6 col-xs-12 col-md-4">
+                            <div class="card file">
+                                <div class="openFile">
+                                    <div class="card-block">
+                                        <div class="card-title">
+                                            <div class="col-sm-3 no-padding">
+                                                <div class="file-preview"
+                                                     style="background-image: url({{this.thumbnail}})"></div>
                                             </div>
+                                            <a href="/files/file?file={{this.file}}" target="_blank">
+                                                {{this.name}}
+                                            </a>
+                                        </div>
+                                        <div class="card-text">
+                                            <a href="/files/file?download=1&file={{this.file}}" target="_blank"><i
+                                                    class="fa fa-cloud-download"></i></a>
+                                            <a href="/files/file/"
+                                               target="_blank"
+                                               data-method="delete"
+                                               data-file-name="{{this.name}}"
+                                               data-file-path="{{this.path}}">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            {{/each}}
+                            </div>
                         </div>
-                    </div>
+                    {{/each}}
                 </div>
             </section>
         </div>

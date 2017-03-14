@@ -11,12 +11,6 @@ function getQueryParameterByName(name, url) {
 }
 
 $(document).ready(function(){
-    // Initialize bootstrap-select
-    $('select').not('.no-bootstrap').chosen({
-        width: "100%",
-        "disable_search": true
-    });
-
     // notification stuff
     var $notification = $('.notification');
     var $notificationContent = $notification.find('.notification-content')
@@ -37,4 +31,22 @@ $(document).ready(function(){
     window.$.hideNotification = function() {
         $notification.fadeOut();
     }
+
+
+    // Initialize bootstrap-select
+    $('select').not('.no-bootstrap').chosen({
+        width: "100%",
+        "disable_search": true
+    });
+
+
+    // Init mobile nav
+    $('.mobile-nav-toggle').click(function(e) {
+        $('aside.nav-sidebar nav:first-child').toggleClass('active');
+    });
+
+    $('.mobile-search-toggle').click(function(e) {
+        $('.search-wrapper .input-group').toggleClass('active');
+        $('.search-wrapper .mobile-search-toggle .fa').toggleClass('fa-search').toggleClass('fa-times');
+    });
 });
