@@ -3,6 +3,8 @@ $(document).ready(function() {
     var $progressBar = $('.progress-bar');
     var $progress = $progressBar.find('.bar');
     var $percentage = $progressBar.find('.percent');
+    var $deleteModal = $('.delete-modal');
+    var $editModal = $('.edit-modal');
 
     // TODO: replace with something cooler
     var reloadFiles = function() {
@@ -84,26 +86,45 @@ $(document).ready(function() {
 
     $('a[data-method="delete"]').on('click', function(e) {
         e.preventDefault();
-        $.ajax({
-            url: $(this).attr('href'),
-            type: $(this).data('method').toUpperCase(),
-            data: {
-                name: $(this).data('file-name'),
-                dir: $(this).data('file-path')
-            },
-            success: function(result) {
-                reloadFiles();
-            }
+
+        var $buttonContext = $(this);
+
+        $deleteModal.modal('show');
+        $deleteModal.find('.btn-submit').unbind('click').on('click', function() {
+            $.ajax({
+                url: $buttonContext.attr('href'),
+                type: 'DELETE',
+                data: {
+                    name: $buttonContext.data('file-name'),
+                    dir: $buttonContext.data('file-path')
+                },
+                success: function(result) {
+                    reloadFiles();
+                }
+            });
         });
     });
 
+    $deleteModal.find('.close, .btn-close').on('click', function() {
+        $deleteModal.modal('hide');
+    });
+
     $('.create-directory').on('click', function(){
+        $editModal.modal('show');
+    });
+
+    $editModal.find('.modal-form').on('submit', function(e) {
+        e.preventDefault();
         $.post('/files/directory', {
-            name: window.prompt('Name'), // TODO: use modal
+            name: $editModal.find('[name="new-dir-name"]').val(),
             dir: getQueryParameterByName('dir')
-        }, function(data) {
+        }, function (data) {
             reloadFiles();
         });
+    });
+
+    $editModal.find('.close, .btn-close').on('click', function() {
+        $editModal.modal('hide');
     });
 
 });
