@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "watch": "nodemon ./bin/www -w ./",
-    "lint": "eslint ./bin ./controllers ./helpers ./api.js ./app.js --ext .js --fix"
+    "lint": "eslint ./bin ./controllers ./helpers ./api.js ./app.js --ext .js --fix",
+    "startd": "echo 'Do you mean 'npm run watch'?'"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
