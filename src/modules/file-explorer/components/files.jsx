@@ -70,6 +70,34 @@ class Files extends React.Component {
 		);
 	}
 
+    writeFileSizePretty(filesize) {
+		var unit;
+		var iterator = 0;
+
+        while (filesize > 1024) {
+            filesize = Math.round((filesize/1024) * 100) / 100;
+            iterator++;
+        }
+        switch (iterator){
+			case 0:
+				unit = "B";
+                break;
+			case 1:
+				unit = "KB";
+                break;
+            case 2:
+                unit = "MB";
+                break;
+            case 3:
+                unit = "GB";
+                break;
+            case 4:
+                unit = "TB";
+                break;
+		}
+		return (filesize + unit);
+	}
+
 	getFileUI(file) {
 		return (
 			<div className="col-sm-6 col-xs-12 col-md-4" key={`file${file.id}`}>
@@ -81,6 +109,7 @@ class Files extends React.Component {
 								<div className="file-preview" style={{'background-image': 'url(' + file.thumbnail + ')'}}></div>
 							</div>
 							<large>{file.name}</large>
+							<small>		{this.writeFileSizePretty(file.size)}</small>
 						</div>
 						<div className="card-text">
 							<i className="fa fa-cloud-download" aria-hidden="true" onClick={this.handleOnDownloadClick.bind(this, file)}/>
@@ -94,12 +123,17 @@ class Files extends React.Component {
 		);
 	}
 
+
+
 	getFilesUI() {
+        var used = 0;
 		return (
 			<div>
 				{this.props.files.map((file) => {
+                    used += parseInt(file.size);
 					return this.getFileUI(file);
 				})}
+				{this.writeFileSizePretty(used)}
 			</div>
 		);
 	}
