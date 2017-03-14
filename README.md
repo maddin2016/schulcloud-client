@@ -16,7 +16,7 @@ _An implementation of the Schul-Cloud client with NodeJS and Express._
 1. Go into project folder
 2. run `gulp watch` to run gulp
 3. run `npm run watch` to boot the application
-4. go to `http://localhost:3000`
+4. go to `http://localhost:3100`
 
 ## How to name your branch
 
