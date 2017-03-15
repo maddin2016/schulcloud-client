@@ -22,32 +22,17 @@
                     </div>
                 </div>
 
-
-                {{#embed "lib/components/modal" action="/administration/students/" method="post" class="edit-modal"}}
+                {{#embed "lib/components/modal-form" method="patch" class="edit-modal"}}
                     {{#content "fields"}}
-                        <input name="_id" type="hidden" />
-
-                        <input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
-
-                        <input name="roles[]" type="hidden" data-force-value="true" value="student" />
-
-                        <div class="form-group">
-                            <label>Vorname</label>
-                            <input class="form-control" name="firstName" type="text" placeholder="Max" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Nachname</label>
-                            <input class="form-control" name="lastName" type="text" placeholder="Mustermann" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>E-Mail-Adresse</label>
-                            <input class="form-control" name="email" type="text" placeholder="test@test.org" required />
-                        </div>
+                        {{> "administration/forms/form-students"}}
                     {{/content}}
                 {{/embed}}
 
+                {{#embed "lib/components/modal-form" action="/administration/students/" method="post" class="add-modal"}}
+                    {{#content "fields"}}
+                        {{> "administration/forms/form-students"}}
+                    {{/content}}
+                {{/embed}}
 
             </section>
         </div>

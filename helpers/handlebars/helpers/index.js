@@ -13,5 +13,12 @@ module.exports = {
         }
         const subString = text.substr(0, length-1);
         return subString.substr(0, subString.lastIndexOf(' ')) + "...";
+    },
+    ifeq: (a, b, opts) => {
+        if (a == b) {
+            return opts.fn(this);
+        } else {
+            return opts.inverse(this);
+        }
     }
 };

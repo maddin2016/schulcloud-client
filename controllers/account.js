@@ -1,7 +1,3 @@
-/*
- * One Controller per layout view
- */
-
 const express = require('express');
 const router = express.Router();
 const api = require('../api');
@@ -10,10 +6,6 @@ const authHelper = require('../helpers/authentication');
 // secure routes
 router.use(authHelper.authChecker);
 
-router.get('/', function (req, res, next) {
-    res.render('account/settings', {title: 'Dein Account'});
-});
-
 router.post('/', function (req, res, next) {
     const {firstName, lastName, email} = req.body; // TODO: sanitize
 
@@ -21,15 +13,13 @@ router.post('/', function (req, res, next) {
         firstName,
         lastName,
         email
-    }})
-        .then(authHelper.populateCurrentUser.bind(this, req, res))
-        .then(_ => {
-            res.render('account/settings', {title: 'Dein Account', message: 'Speichern erfolgreich'});
-        }).catch(_ => {
-            res.render('account/settings', {title: 'Dein Account', error: 'Speichern fehlgeschlagen' });
-        });
-
+    }}).then(authHelper.populateCurrentUser.bind(this, req, res)).then(_ => {
+        next();
+    });
 });
 
+router.all('/', function (req, res, next) {
+    res.render('account/settings', {title: 'Dein Account Bitch'});
+});
 
 module.exports = router;

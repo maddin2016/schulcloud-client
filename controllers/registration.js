@@ -59,9 +59,7 @@ router.post('/register/account', function (req, res, next) {
     }).then(account => {
         return login(req, res, {strategy:'local', username, password});
     }).then(_ => {
-        return res.json({
-            location: '/login/success/'
-        });
+        return res.redirect('/login/success/');
     }).catch(err => {
         return res.status(500).send(err);
     });
@@ -108,9 +106,7 @@ router.post('/register/user', authHelper.authChecker, function (req, res, next) 
         // refresh AccessToken
         return login(req, res, {strategy:'jwt', accessToken: req.cookies.jwt});
     }).then(_ => {
-        return res.status(200).json({
-            location: '/login/success/'
-        });
+        return res.redirect('/login/success/');
     }).catch(err => {
         return res.status(500).send(err);
     });
@@ -147,9 +143,7 @@ router.post('/register/', function (req, res, next) {
             // do login at this point already so we don't need to fuck around with passwords
             return login(req, res, {strategy:'local', username, password});
         }).then(_ => {
-            return res.status(200).json({
-                location: '/login/success/'
-            });
+            return res.redirect('/login/success/');
         }).catch(err => {
             return res.status(500).send(err);
         });

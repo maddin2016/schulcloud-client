@@ -20,10 +20,34 @@ const getSelectOptions = (req, service, query) => {
 
 // Login
 
-router.get('/login/', function (req, res, next) {
+router.post('/login/', function (req, res, next) {
+    const username = req.body.username; // TODO: sanitize
+    const password = req.body.password; // TODO: sanitize
+    const systemId = req.body.systemId;
+
+    const login = (data) => {
+        return api(req).post('/authentication', {json: data}).then(data => {
+            res.cookie('jwt', data.accessToken);
+            res.redirect('/login/success/');
+        }).catch(_ => {
+            next();
+        });
+    };
+
+    if(systemId) {
+        return api(req).get('/systems/' + req.body.systemId).then(system => {
+            return login({strategy: system.type, username, password, systemId});
+        });
+    } else {
+        return login({strategy: 'local', username, password});
+    }
+});
+
+
+router.all('/login/', function (req, res, next) {
     authHelper.isAuthenticated(req).then(isAuthenticated => {
         if(isAuthenticated) {
-            return res.redirect('/dashboard/');
+            return res.redirect('/login/success/');
         } else {
             let schoolsPromise = getSelectOptions(req, 'schools');
 
@@ -53,31 +77,6 @@ router.get('/login/systems/:schoolId', function (req, res, next) {
         return res.send(data.systems);
     });
 });
-
-
-router.post('/login/', function (req, res, next) {
-    const username = req.body.username; // TODO: sanitize
-    const password = req.body.password; // TODO: sanitize
-    const systemId = req.body.systemId;
-
-    const login = (data) => {
-        return api(req).post('/authentication', {json: data}).then(data => {
-            res.cookie('jwt', data.accessToken);
-            return res.sendStatus(200);
-        }).catch(_ => {
-            return res.sendStatus(422);
-        });
-    };
-
-    if(systemId) {
-        return api(req).get('/systems/' + req.body.systemId).then(system => {
-            return login({strategy: system.type, username, password, systemId});
-        });
-    } else {
-        return login({strategy: 'local', username, password});
-    }
-});
-
 
 router.get('/logout/', function (req, res, next) {
     api(req).del('/authentication')

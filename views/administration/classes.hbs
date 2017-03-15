@@ -22,36 +22,15 @@
                     </div>
                 </div>
 
-                {{#embed "lib/components/modal" action="/administration/classes/" method="post" class="edit-modal"}}
+                {{#embed "lib/components/modal-form" method="patch" class="edit-modal"}}
                     {{#content "fields"}}
-                        <input name="_id" type="hidden" />
+                        {{> "administration/forms/form-classes"}}
+                    {{/content}}
+                {{/embed}}
 
-                        <input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
-
-                        <div class="form-group">
-                            <label>Name der Klasse</label>
-                            <input class="form-control" name="name" type="text" placeholder="10a" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Klassenlehrer</label>
-
-                            <select name="teacherIds[]" required multiple data-placeholder="Lehrer auswählen">
-                                {{#each teachers}}
-                                    <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.lastName}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Schüler</label>
-
-                            <select name="userIds[]" required multiple data-placeholder="Schüler auswählen">
-                                {{#each students}}
-                                    <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.lastName}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
+                {{#embed "lib/components/modal-form" action="/administration/classes/" method="post" class="add-modal"}}
+                    {{#content "fields"}}
+                        {{> "administration/forms/form-classes"}}
                     {{/content}}
                 {{/embed}}
 

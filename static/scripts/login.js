@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var $form = $('.login-form');
     var $btnToggleProviers = $('.btn-toggle-providers');
     var $loginProviders = $('.login-providers');
     var $school = $('.school');
@@ -24,18 +23,4 @@ $(document).ready(function() {
     $school.on('change', function() {
         loadSystems($school.val());
     });
-
-    $form.on('submit', function(e) {
-        e.preventDefault();
-
-        var data = $(this).serializeObject();
-
-        $.post($form.prop('action'), data, function() {
-            window.location = '/login/success/';
-        }).fail(function() {
-            $.showNotification('Benutzername oder Passwort falsch.', 'danger')
-        })
-    });
-
-
 });

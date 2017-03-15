@@ -109,6 +109,104 @@ const getScopeDirs = (req, res, scope) => {
 router.use(authHelper.authChecker);
 
 
+
+
+
+// upload file
+router.post('/file', function (req, res, next) {
+    const {type, name, dir = '', action = 'putObject'} = req.body;
+
+    const data = {
+        storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
+        fileName: name,
+        fileType: type,
+        action: action
+    };
+
+    getSignedUrl(req, data).then(signedUrl => {
+        res.json({signedUrl});
+    }).catch(_ => {
+        res.sendStatus(500);
+    });
+});
+
+
+// delete file
+router.delete('/file', function (req, res, next) {
+    const {name, dir = ''} = req.body;
+
+    const data = {
+        storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
+        fileName: name,
+        fileType: null,
+        action: null
+    };
+
+    api(req).delete('/fileStorage/', {
+        qs: data
+    }).then(_ => {
+        res.sendStatus(200);
+    }).catch(_ => {
+        res.sendStatus(500);
+    });
+});
+
+
+// get file
+router.get('/file', function (req, res, next) {
+
+    const {file, download = false} = req.query;
+
+    const data = {
+        storageContext: getStorageContext(req, res, {url: req.get('Referrer')}),
+        fileName: file,
+        fileType: mime.lookup(file),
+        action: 'getObject'
+    };
+
+    getSignedUrl(req, data).then(signedUrl => {
+        rp.get(signedUrl.url, {encoding: null}).then(awsFile => {
+            if (download) {
+                res.type('application/octet-stream');
+                res.set('Content-Disposition', 'attachment;filename=' + path.basename(file));
+            } else if (signedUrl.header['Content-Type']) {
+                res.type(signedUrl.header['Content-Type']);
+            }
+            res.end(awsFile, 'binary');
+        });
+    }).catch(err => {
+        res.sendStatus(500);
+    });
+});
+
+
+
+// create directory
+router.post('/directory', function (req, res, next) {
+    const {name, dir} = req.body;
+
+    api(req).post('/fileStorage/directories', {
+        json: {
+            storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
+            dirName: name || 'Neuer Ordner'
+        }
+    }).then(_ => {
+        res.sendStatus(200);
+    }).catch(err => {
+        res.sendStatus(500);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 router.get('/', FileGetter, function (req, res, next) {
     res.render('files/files', Object.assign({
         title: 'Dateien',
@@ -207,90 +305,5 @@ router.get('/classes/:classId', FileGetter, function (req, res, next) {
     });
 });
 
-
-
-// get file
-router.get('/file', function (req, res, next) {
-
-    const {file, download = false} = req.query;
-
-    const data = {
-        storageContext: getStorageContext(req, res, {url: req.get('Referrer')}),
-        fileName: file,
-        fileType: mime.lookup(file),
-        action: 'getObject'
-    };
-
-    getSignedUrl(req, data).then(signedUrl => {
-        rp.get(signedUrl.url, {encoding: null}).then(awsFile => {
-            if (download) {
-                res.type('application/octet-stream');
-                res.set('Content-Disposition', 'attachment;filename=' + path.basename(file));
-            } else if (signedUrl.header['Content-Type']) {
-                res.type(signedUrl.header['Content-Type']);
-            }
-            res.end(awsFile, 'binary');
-        });
-    }).catch(err => {
-        res.sendStatus(500);
-    });
-});
-
-
-// upload file
-router.post('/file', function (req, res, next) {
-    const {type, name, dir = '', action = 'putObject'} = req.body;
-
-    const data = {
-        storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
-        fileName: name,
-        fileType: type,
-        action: action
-    };
-
-    getSignedUrl(req, data).then(signedUrl => {
-        res.json({signedUrl});
-    }).catch(_ => {
-        res.sendStatus(500);
-    });
-});
-
-
-// delete file
-router.delete('/file', function (req, res, next) {
-    const {name, dir = ''} = req.body;
-
-    const data = {
-        storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
-        fileName: name,
-        fileType: null,
-        action: null
-    };
-
-    api(req).delete('/fileStorage/', {
-        qs: data
-    }).then(_ => {
-        res.sendStatus(200);
-    }).catch(_ => {
-        res.sendStatus(500);
-    });
-});
-
-
-// create directory
-router.post('/directory', function (req, res, next) {
-    const {name, dir} = req.body;
-
-    api(req).post('/fileStorage/directories', {
-        json: {
-            storageContext: getStorageContext(req, res, {url: req.get('Referrer'), dir}),
-            dirName: name || 'Neuer Ordner'
-        }
-    }).then(_ => {
-        res.sendStatus(200);
-    }).catch(err => {
-        res.sendStatus(500);
-    });
-});
 
 module.exports = router;

@@ -4,7 +4,7 @@
 @import "./tether/tether.min.css";
 @import "./bootstrap/scss/bootstrap";
 @import "./fontawesome/font-awesome";
-@import "./chosen/bootstrap-chosen.css";
+@import "./chosen/bootstrap-chosen.scss";
 
 /* customize bootstrap stuff in /bootstrap/scss/_custom.scss */
 
@@ -69,4 +69,8 @@ label {
 
 .notification {
 	display:none;
+}
+
+form.inline {
+	display: inline;
 }
