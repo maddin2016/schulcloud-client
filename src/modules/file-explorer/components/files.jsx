@@ -101,7 +101,9 @@ class Files extends React.Component {
 	getFileUI(file) {
 		return (
 			<div className="col-sm-6 col-xs-12 col-md-4" key={`file${file.id}`}>
-				<div className="card file">
+				<div className="card file"
+					 onMouseOut={function() {$("."+file.id).hide()}}
+					 onMouseOver={function() {$("."+file.id).show()}}>
 					<div className="openFile"  onClick={this.handleOnOpenClick.bind(this, file)}>
 					<div className="card-block">
 						<div className="card-title">
@@ -109,7 +111,12 @@ class Files extends React.Component {
 								<div className="file-preview" style={{'background-image': 'url(' + file.thumbnail + ')'}}></div>
 							</div>
 							<large>{file.name}</large>
-							<small>		{this.writeFileSizePretty(file.size)}</small>
+							<div className={file.id} style={{"display": "none"}}>
+								Änderungsdatum: {file.lastModified}
+                                Ort: {file.path}
+								Art: {file.type}
+								Größe: {this.writeFileSizePretty(file.size)}
+							</div>
 						</div>
 						<div className="card-text">
 							<i className="fa fa-cloud-download" aria-hidden="true" onClick={this.handleOnDownloadClick.bind(this, file)}/>
@@ -123,15 +130,13 @@ class Files extends React.Component {
 		);
 	}
 
-
-
 	getFilesUI() {
         var used = 0;
 		return (
 			<div>
 				{this.props.files.map((file) => {
                     used += parseInt(file.size);
-					return this.getFileUI(file);
+                    return this.getFileUI(file);
 				})}
 				{this.writeFileSizePretty(used)}
 			</div>
@@ -152,6 +157,7 @@ class Files extends React.Component {
 				<div className="container-fluid">
 					<div className="row">
 						<div className="col-sm-12 no-padding">
+							{console.log(this)}
 							{this.getStorageContextUI()}
 						</div>
 					</div>
