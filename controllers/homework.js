@@ -10,6 +10,14 @@ const authHelper = require('../helpers/authentication');
 
 router.use(authHelper.authChecker);
 
+const getSelectOptions = (req, service, query, values = []) => {
+    return api(req).get('/' + service, {
+            qs: query
+        }).then(data => {
+            return data.data;
+});
+};
+
 
 const getCreateHandler = (service) => {
     return function (req, res, next) {
@@ -60,10 +68,12 @@ const getDeleteHandler = (service) => {
     };
 };
 
+
+
 router.get('/', function (req, res, next) {
-    console.log(res.locals.currentUser._id);
     api(req).get('/homework/', {
         qs: {
+            $populate: ['courseId'],
             $or: [
                 {userIds: res.locals.currentUser._id},
                 {teacherId: res.locals.currentUser._id}
@@ -72,8 +82,15 @@ router.get('/', function (req, res, next) {
     }).then(assignments => {
         assignments = assignments.data.map(assignment => {
             assignment.url = '/homework/' + assignment._id;
+
+            const submissionPromise = getSelectOptions(req, 'submissions', {
+                homeworkId: assignment._id,
+                $populate: ['studentId']
+            });
+
             return assignment;
         });
+        console.log(assignments);
         res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments});
     });
 });
@@ -84,18 +101,27 @@ router.delete('/homework/:id', getDeleteHandler('homework'));
 
 router.get('/:assignmentId', function (req, res, next) {
     api(req).get('/homework/' + req.params.assignmentId, {
+        qs: {$populate: ['courseId']}
     }).then(assignment => {
-        res.render('homework/assignment', Object.assign({}, assignment, {
-            title: assignment.courseId + ' - ' + assignment.name,
-            breadcrumb: [
-                {
-                    title: 'Meine Hausaufgaben',
-                    url: '/homework'
-                },
-                {}
-            ]
-        }));
-    });
+        const submissionPromise = getSelectOptions(req, 'submissions', {
+            homeworkId: assignment._id,
+            $populate: ['studentId']
+        });
+        Promise.resolve(submissionPromise).then(submissions => {
+            assignment.submissions = submissions;
+            console.log(assignment);
+            res.render('homework/assignment', Object.assign({}, assignment, {
+                title: assignment.courseId.name + ' - ' + assignment.name,
+                breadcrumb: [
+                    {
+                        title: 'Meine Hausaufgaben',
+                        url: '/homework'
+                    },
+                    {}
+                ]
+            }));
+        });
+});
 });
 
 module.exports = router;

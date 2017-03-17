@@ -7,26 +7,28 @@
         <div class="route-homework">
             <section class="section-homework">
                 <h5>Hausaufgaben</h5>
-                <button type="submit" class="btn btn-primary btn-add">
-                    <!--<i class="fa fa-plus" aria-hidden="true" />-->
+                <button type="submit" class="btn btn-primary btn-add create">
+                    <!--i class="fa fa-plus" aria-hidden="true" /-->
                     Aufgabe hinzufügen
                 </button>
-                <ol class=homework">
+                <ol class="homework">
                     <div class="row"><div class="col-lg-8">
                         {{#each assignments}}
+                            {{this.submissions}}
                             <li class="card assignment">
                                 <a href="{{this.url}}">
-                                    <div class="due">Due/Status</div>
+                                    <div class="due">{{this.dueDate}}</div>
                                     <h5 class="title">
-                                        <span>{{this.course}}</span>
-                                        {{this.title}}
+                                        <span>{{this.courseId.name}}</span>
+                                        {{this.name}}
                                     </h5>
                                     <br/>
-                                    Status
+                                    <!-- graded, turned in etc. -->
+                                    {{this.status}}
                                     <div class="description">
                                         <p>{{truncate this.description}}</p>
                                     </div>
-                                    <span class="more">Details <i className="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                    <span class="more">Details ><i className="fa fa-chevron-right" aria-hidden="true"></i></span>
                                 </a>
                             </li>
                         {{else}}
