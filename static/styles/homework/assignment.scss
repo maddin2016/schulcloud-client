@@ -1,74 +1,76 @@
 @import '../lib/colors.scss';
 @import '../lib/bootstrap/scss/bootstrap';
 
-.route-homework{
+.section-homework{
 	width: 100%;
 	clear:both;
-	.mainfacts{
-		clear:both;
-		h5 {
-			padding:10px 0;
-			margin:0;
-			color: $colorHPIRed;
-			span:before{content:"[";}
-			span:after{content:"] - ";}
+	
+	.due{
+		float:right;
+		padding:10px 0;
+		margin:0;
+		color:grey;
+		&:before{
+			content:"Abgabe: ";
 		}
-		.edit{
-			float:right;
-			margin:5px;
-			margin-right:0;
-			padding: 5px 17px 5px 25px;
-			i.fa{
-				margin-left:7px;
+	}
+	
+	.edit{
+		float:right;
+		margin:5px;
+		margin-right:0;
+		padding: 5px 17px 5px 25px;
+		i.fa{
+			margin-left:7px;
+		}
+	}
+	
+	.tab-link{
+		display:inline-block;
+		padding: 5px 10px 0;
+		margin-bottom: 15px;
+		border-bottom: 1px solid grey;
+		text-decoration:none;
+		&.active{
+			border-bottom-color: $colorHPIRed;
+		}
+	}
+	.tab-content{
+		display:none;
+		width: 100%;
+		
+		&#extended:target,
+		&#submission:target,
+		&#submissions:target,
+		&#feedback:target{
+			display:block;
+		}
+		> h5{
+			font-size: 1.2rem;
+			font-weight: 700;
+			color: $colorHPIOrange;
+		}
+	
+		.description,
+		.comment,
+		.feedback{
+			color: grey;
+		}
+		.feedback{
+			margin-right: 75px;
+			color: grey;
+			@include media-breakpoint-down(xs) {
+				margin-right: 25px;
 			}
 		}
-	}
-		.due{
-			float:right;
-			padding:10px 0;
-			margin:0;
-			color:grey;
-			&:before{
-				content:"Abgabe: ";
-			}
+		textarea{
+			min-height: 100px;
 		}
-	
-	.description,
-	.comment,
-	.feedback{
-		color: grey;
-	}
-	.feedback{
-		margin-right: 75px;
-		color: grey;
-		@include media-breakpoint-down(xs) {
-			margin-right: 25px;
+		
+		h6{
+			color: $colorHPIOrange;
 		}
 	}
-	textarea{
-		min-height: 100px;
-	}
-	
-	h6{
-		color: $colorHPIOrange;
-	}
-	
-	.ReactTabs__TabPanel--selected{
-		margin: 10px 0;
-	}
-	.nav-item {
-		.detail{
-			font-size:small;
-			color:grey;
-			&::before{content:"(";}
-			&::after{content:")";}
-		}
-	}
-	.nav-item.active{
-  		color: #55595c;
-  		background-color: #fff;
-		border-bottom: 1px solid $colorHPIRed;
-  	}
   
   	@include media-breakpoint-down(xs) {
 		.nav-tabs{
