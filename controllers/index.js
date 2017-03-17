@@ -10,6 +10,7 @@ router.use('/content/', require('./content'));
 router.use('/courses/', require('./courses'));
 router.use('/dashboard/', require('./dashboard'));
 router.use('/files/', require('./files'));
+router.use('/homework/', require('./homework'));
 
 router.use('/administration/', require('./administration'));
 

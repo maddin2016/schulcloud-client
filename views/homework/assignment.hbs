@@ -1,0 +1,60 @@
+{{#extend "homework/homework"}}
+
+    {{#content "styles" mode="append"}}
+        <link rel="stylesheet" href="/styles/homework/assignment.css"/>
+    {{/content}}
+
+    {{#content "page"}}
+
+        <section class="section-homework">
+
+            <div class="row description">
+                <div class="col-sm-12">
+                    <p class="lead">{{description}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Unterrichtsstunden</h4>
+
+                    {{#if lessonIds}}
+                        <div class="list-group">
+                            {{#each lessonIds}}
+                                <a href="{{this.url}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <span>{{this.title}}</span>
+                                    <small class="text-muted lesson-date float-right">{{this.date}}</small>
+                                </a>
+                            {{/each}}
+                        </div>
+                    {{else}}
+                        <p class="text-muted">
+                            <span>Keine Unterrichtsstunden.</span>
+                        </p>
+                    {{/if}}
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Tools</h4>
+
+                    {{#if ltiToolIds}}
+                        <div class="list-group">
+                            {{#each ltiToolIds}}
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <img src="http://www.wissensschule.de/wp-content/uploads/2012/02/logo-bettermarks.jpg" class="float-left" style="width:100px; height:auto;"/>
+                                    <span>{{this.title}}</span>
+                                    <small class="text-muted lesson-date">{{this.date}}</small>
+                                </a>
+                            {{/each}}
+                        </div>
+                    {{else}}
+                        <p class="text-muted">
+                            <span>Keine Tools.</span>
+                        </p>
+                    {{/if}}
+                </div>
+            </div>
+
+        </section>
+    {{/content}}
+{{/extend}}
