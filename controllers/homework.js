@@ -86,7 +86,7 @@ router.get('/:assignmentId', function (req, res, next) {
     api(req).get('/homework/' + req.params.assignmentId, {
     }).then(assignment => {
         res.render('homework/assignment', Object.assign({}, assignment, {
-            title: assignment.name,
+            title: assignment.courseId + ' - ' + assignment.name,
             breadcrumb: [
                 {
                     title: 'Meine Hausaufgaben',
