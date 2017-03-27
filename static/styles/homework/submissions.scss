@@ -83,11 +83,12 @@
 						display:block;
 						line-height:32px;
 					}
-					.button{
+					.btn{
 						float:right;
 						    
 						display:none;
-						text-align:center;
+						color: #373a3c;
+						/* text-align:center;
 						padding: 5px;
 						margin: 3px 0;
 						width: 1.8rem;
@@ -95,9 +96,9 @@
 						line-height: 1rem;
 						background-color: grey;
 						color: #fff;
-						border-radius: 5px;
+						border-radius: 5px; */
 					}
-					&:hover .button{
+					&:hover .btn{
 						display: inline-block;
 					}
 				}

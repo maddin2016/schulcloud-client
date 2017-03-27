@@ -98,6 +98,7 @@
 			.description{
 				margin-top: 10px;
 				margin-right: 75px;
+				margin: 10px 75px 10px 0;
 				color: grey;
 				@include media-breakpoint-down(xs) {
 					margin-right: 25px;
@@ -135,7 +136,9 @@
 				}
 			}
 			.more{
-				display:block;
+				/* display:block;*/
+				float:right;
+				padding: 5px 0 5px 10px;
 				clear:both;
 				text-align:right;
 				color: #b10438;
