@@ -17,9 +17,19 @@
                 $(this).parent('.usersubmission:not(.clicked)').toggleClass('active');
                 $('.usersubmission.clicked').removeClass('clicked');
 
-                $('.usersubmission  td:last-of-type i').removeClass('fa-times').addClass('fa-pencil-square-o');
+                $('.usersubmission td:last-of-type i').removeClass('fa-times').addClass('fa-pencil-square-o');
                 $('.usersubmission.active td:last-of-type i').removeClass('fa-pencil-square-o').addClass('fa-times');
             });
+			
+			$('.sub-tabs .tab-links .tab-link').click(function(){
+                $('.tab-link.active').removeClass('active');
+                $(this).addClass('active');
+				
+                $('.tab-content.active').removeClass('active');
+				//console.log("Subtab-Click", "."+this.id.replace("-tab-link","")+" .tab-content");
+				$(".tabs"+" ."+this.id.replace("-tab-link","")+".tab-content").addClass('active');
+			});
+			
 		});
         </script>
     {{/content}}

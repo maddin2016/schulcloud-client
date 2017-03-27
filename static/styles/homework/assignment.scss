@@ -42,7 +42,8 @@
 		&#extended:target,
 		&#submission:target,
 		&#submissions:target,
-		&#feedback:target{
+		&#feedback:target,
+		.tab-content.active{
 			display:block;
 		}
 		> h5{
