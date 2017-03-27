@@ -15,7 +15,7 @@
         {{/each}}
     </select>
     <label>
-        <input class="form-control" name="private" type="checkbox" value="privat" />
+        <input name="private" type="checkbox" value="private" />
         Private Aufgabe
     </label>
 </div>
@@ -33,4 +33,11 @@
 <div class="form-group">
     <label>bis</label>
     <input class="form-control" name="dueDate" type="date" placeholder="dd.mm.yy" required />
+</div>
+
+<div class="form-group">
+    <label>
+        <input name="private" type="checkbox" value="public" />
+        Schülerabgaben untereinander sichtbar
+    </label>
 </div>

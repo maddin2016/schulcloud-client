@@ -27,6 +27,21 @@ const getSelectOptions = (req, service, query, values = []) => {
 });
 };
 
+const getActions = (item, path) => {
+    return [
+        {
+            link: path + item._id,
+            class: 'btn-edit',
+            icon: 'edit'
+        },
+        {
+            link: path + item._id,
+            class: 'btn-delete',
+            icon: 'trash-o',
+            method: 'delete'
+        }
+    ];
+};
 
 const getCreateHandler = (service) => {
     return function (req, res, next) {
@@ -70,17 +85,17 @@ const getDetailHandler = (service) => {
 const getDeleteHandler = (service) => {
     return function (req, res, next) {
         api(req).delete('/' + service + '/' + req.params.id).then(_ => {
-            res.redirect(req.header('Referer'));
-    }).catch(err => {
-            next(err);
-    });
+            res.redirect('/' + service);
+        }).catch(err => {
+                next(err);
+        });
     };
 };
 
 
 router.post('/', getCreateHandler('homework'));
-router.patch('/homework/:id', getUpdateHandler('homework'));
-router.delete('/homework/:id', getDeleteHandler('homework'));
+router.patch('/:id', getUpdateHandler('homework'));
+router.delete('/:id', getDeleteHandler('homework'));
 
 router.all('/', function (req, res, next) {
     api(req).get('/homework/', {
@@ -104,6 +119,7 @@ router.all('/', function (req, res, next) {
                 homeworkId: assignment._id,
                 $populate: ['studentId']
             });
+            assignment.actions = getActions(assignment, '/homework/');
             return assignment;
         });
         assignments = assignments.filter(function(n){ return n != undefined });
