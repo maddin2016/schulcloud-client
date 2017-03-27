@@ -13,12 +13,16 @@
         {{#each courses}}
             <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
         {{/each}}
-    </select>course
+    </select>
+    <label>
+        <input class="form-control" name="private" type="checkbox" value="privat" />
+        Private Aufgabe
+    </label>
 </div>
 
 <div class="form-group">
     <label>Aufgabenstellung</label>
-    <textarea class="form-control" name="text" type="text" placeholder="Aufgabenstellung" required></textarea>
+    <textarea class="form-control" name="description" type="text" placeholder="Aufgabenstellung" required></textarea>
 </div>
 
 <div class="form-group">

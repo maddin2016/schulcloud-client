@@ -78,8 +78,11 @@ const getDeleteHandler = (service) => {
 };
 
 
+router.post('/', getCreateHandler('homework'));
+router.patch('/homework/:id', getUpdateHandler('homework'));
+router.delete('/homework/:id', getDeleteHandler('homework'));
 
-router.get('/', function (req, res, next) {
+router.all('/', function (req, res, next) {
     api(req).get('/homework/', {
         qs: {
             $populate: ['courseId']
@@ -104,13 +107,17 @@ router.get('/', function (req, res, next) {
             return assignment;
         });
         assignments = assignments.filter(function(n){ return n != undefined });
-        res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments});
+        const coursesPromise = getSelectOptions(req, 'courses', {$or:[{
+            userIds: res.locals.currentUser._id
+        },{
+            teacherIds: res.locals.currentUser._id
+        }]});
+        Promise.resolve(coursesPromise).then(courses => {
+            res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments, courses});
+        });
+
     });
 });
-router.post('/homework/', getCreateHandler('homework'));
-router.patch('/homework/:id', getUpdateHandler('homework'));
-router.get('/homework/:id', getDetailHandler('homework'));
-router.delete('/homework/:id', getDeleteHandler('homework'));
 
 router.get('/:assignmentId', function (req, res, next) {
     api(req).get('/homework/' + req.params.assignmentId, {
@@ -131,7 +138,7 @@ router.get('/:assignmentId', function (req, res, next) {
             assignment.dueDateF = dueDate.getDate()+"."+(dueDate.getMonth()+1)+"."+dueDate.getFullYear();
             var availableDate = new Date(assignment.availableDate);
             assignment.availableDateF = availableDate.getDate()+"."+(availableDate.getMonth()+1)+"."+availableDate.getFullYear();
-            //23:59 am Tag
+            //23:59 am Tag der Abgabe
             if (new Date(assignment.dueDate).getTime()+84340000 < Date.now()){
                 assignment.submittable = false;
             }else{
