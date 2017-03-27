@@ -30,19 +30,25 @@
     {{#content "page"}}
 
         <section class="section-homework">
-            <div class="due">{{dueDate}}</div>
+            <div class="due">{{dueDateF}}</div>
 
 			<nav class="tab-links">
 				<a href="#extended" id="extended-tab-link" class="tab-link">Details</a>
-				<a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
-				<a href="#submissions" id="submissions-tab-link" class="tab-link">Abgaben</a>
-				<a href="#feedback" id="feedback-tab-link" class="tab-link">Feedback</a>
+                {{#ifvalue teacherId value=currentUser._id}}
+                    <a href="#submissions" id="submissions-tab-link" class="tab-link">Abgaben</a>
+                {{else}}
+                    <a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
+                    <a href="#feedback" id="feedback-tab-link" class="tab-link">Feedback</a>
+                {{/ifvalue}}
 			</nav>
 			<div class="tabs">
 				{{> 'homework/extended'}}
-				{{> 'homework/submission'}}
-				{{> 'homework/submissions'}}
-				{{> 'homework/feedback'}}
+                {{#ifvalue teacherId value=currentUser._id}}
+				    {{> 'homework/submissions'}}
+                {{else}}
+				    {{> 'homework/submission'}}
+                    {{> 'homework/feedback'}}
+                {{/ifvalue}}
 			</div>
         </section>
     {{/content}}

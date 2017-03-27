@@ -3,7 +3,13 @@
     <div class="homework">
         <div class="comment">
             <h6>Kommentar</h6>
-            {{#if true}}
+            {{#if submittable}}
+                <form class="form" method="post" action="{{action}}">
+                {{#if method}}
+                    <input type="hidden" name="_method" data-force-value="true" value="{{method}}" />
+                {{/if}}
+                <input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
+                <input name="studentId" type="hidden" data-force-value="true" value="{{currentUser._id}}" />
                 <div class="form-group">
                     <textarea id="evaluation" class="form-control" placeholder="Verfasse einen Kommentar...">{{#if comment}}{{comment}}{{/if}}</textarea>
                 </div>
@@ -13,7 +19,6 @@
                 {{else}}
                     <p>Kein Kommentar.</p>
                 {{/if}}
-
             {{/if}}
         </div>
         <h6>Dateien</h6>
@@ -27,10 +32,15 @@
                         <a class="delete" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     </div>
                 </li>
+                {{#if submittable}}
                 <li>
                     <a class="add" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </li>
+                {{/if}}
             </ul>
         </div>
+        {{#if submittable}}
+            <button type="submit" class="btn btn-primary btn-submit">Speichern</button>
+        {{/if}}
     </div>
 </section>
