@@ -1,47 +1,47 @@
 <section class="section-evaluation">
-            <div class="submission">
-				<h6>Abgabe</h6>
-                <div class="comment">
-                    <p>{{this.submissions.comment}}</p>
-                </div>
-                <div class="material card">
-                    <ul>
-                        <li>
-                            <img src="http://placehold.it/100x80"/>
-                            <p class="title">ExtraLongFilename.html</p>
-                            <div class="buttons">
-                                <a class="download" href="#"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="buttons">
-                                <a class="download" href="#"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="comment" class="comment">
-				<h6>Bewertung</h6>
-                <div class="comment form-group">
-                    <div class="form-group">
-                        <label>Note</label>
-                        <select name="grade" required data-placeholder="Note auswählen">
-                            {{#each grades}}
-                                <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
-                            {{/each}}
-                        </select>
+    <div class="submission">
+        <h6>Abgabe</h6>
+        <div class="comment">
+            <p>{{this.submissions.comment}}</p>
+        </div>
+        <div class="material card">
+            <ul>
+                <li>
+                    <img src="http://placehold.it/100x80"/>
+                    <p class="title">ExtraLongFilename.html</p>
+                    <div class="buttons">
+                        <a class="download" href="#"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
                     </div>
-                    <h6>Kommentar</h6>
-                    <textarea id="evaluation" type="text" class="form-control" placeholder="Enter Feedback here..." cols="10" defaultValue={this.get_EvaluationCommentByUser("id")}></textarea>
-                </div>
-                <h6>Dateien</h6>
-                <div class="material card">
-                    <ul>
-                        <li>
-                            <a class="add" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <button type="submit" class="btn btn-primary">Speichern</button>
+                    <div class="buttons">
+                        <a class="download" href="#"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="comment" class="comment">
+        <h6>Bewertung</h6>
+        <div class="comment form-group">
+            <div class="form-group">
+                <label>Note</label>
+                <select name="grade" required data-placeholder="Note auswählen">
+                    {{#each grades}}
+                        <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
             </div>
+            <h6>Kommentar</h6>
+            <textarea id="evaluation" type="text" class="form-control" placeholder="Enter Feedback here..." cols="10" defaultValue={this.get_EvaluationCommentByUser("id")}></textarea>
+        </div>
+        <h6>Dateien</h6>
+        <div class="material card">
+            <ul>
+                <li>
+                    <a class="add" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </div>
 </section>

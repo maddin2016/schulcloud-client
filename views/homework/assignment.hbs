@@ -1,6 +1,7 @@
 {{#extend "homework/homework"}}
 	{{#content "scripts" mode="append"}}
-        <script type="text/javascript">$(document).ready(function(){
+        <script type="text/javascript">
+        $(document).ready(function(){
 			if(!window.location.hash){ window.location.hash="extended"}
 			
 			document.getElementById(window.location.hash.substr(1)+"-tab-link").classList.add("active");
@@ -11,15 +12,16 @@
 			});
 
 			$('.userinfo').click(function(){
-			$(this).parent('.usersubmission.active').addClass('clicked');
-			$('.usersubmission.active').removeClass('active');
-			$(this).parent('.usersubmission:not(.clicked)').toggleClass('active');
-			$('.usersubmission.clicked').removeClass('clicked');
-			
-			$('.usersubmission  td:last-of-type i').removeClass('fa-times').addClass('fa-pencil-square-o');
-			$('.usersubmission.active td:last-of-type i').removeClass('fa-pencil-square-o').addClass('fa-times');
+                $(this).parent('.usersubmission.active').addClass('clicked');
+                $('.usersubmission.active').removeClass('active');
+                $(this).parent('.usersubmission:not(.clicked)').toggleClass('active');
+                $('.usersubmission.clicked').removeClass('clicked');
+
+                $('.usersubmission  td:last-of-type i').removeClass('fa-times').addClass('fa-pencil-square-o');
+                $('.usersubmission.active td:last-of-type i').removeClass('fa-pencil-square-o').addClass('fa-times');
+            });
 		});
-		});</script>
+        </script>
     {{/content}}
     {{#content "styles" mode="append"}}
         <link rel="stylesheet" href="/styles/homework/assignment.css"/>
