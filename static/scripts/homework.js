@@ -24,12 +24,13 @@ $(document).ready(function() {
         // fields
         $('[name]', $form).not('[data-force-value]').each(function () {
             var value = (data.fields || {})[$(this).prop('name').replace('[]', '')] || '';
-			console.log($(this).prop('name')+":",value,$(this).prop("type"));
             switch ($(this).prop("type")) {
                 case "radio":
                 case "checkbox":
                     $(this).each(function () {
-                        if ($(this).attr('name') == $(this).prop('name')) $(this).attr("checked", value);
+                        if (($(this).attr('name') == $(this).prop('name'))&&value){
+							$(this).attr("checked", value);
+						}
                     });
                     break;
 				case "date":

@@ -121,6 +121,7 @@ router.all('/', function (req, res, next) {
             if(!assignment.private){
                 assignment.userIds = assignment.courseId.userIds;
             }
+			assignment.privateclass = assignment.private?"private":"";
 			assignment.publicSubmissions = assignment.publicSubmissions; 
             var dueDate = new Date(assignment.dueDate);
             assignment.dueDateF = dueDate.getDate()+"."+(dueDate.getMonth()+1)+"."+dueDate.getFullYear();
@@ -218,6 +219,7 @@ router.get('/:assignmentId', function (req, res, next) {
                 });
             }else{
                 assignment.submission = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0];
+                assignment.gradeComment = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0]["gradeComment"];
                 res.render('homework/assignment', Object.assign({}, assignment, {
                     title: assignment.courseId.name + ' - ' + assignment.name,
                     breadcrumb: [
