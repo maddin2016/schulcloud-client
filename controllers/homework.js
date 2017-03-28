@@ -106,30 +106,46 @@ router.all('/', function (req, res, next) {
         assignments = assignments.data.map(assignment => {
             if(assignment.courseId.userIds.indexOf(res.locals.currentUser._id) == -1
                 && assignment.teacherId != res.locals.currentUser._id){ return }
+            if(assignment.private
+                && assignment.teacherId != res.locals.currentUser._id){ return }
             if(new Date(assignment.availableDate).getTime() > Date.now()
                 && assignment.teacherId != res.locals.currentUser._id){ return }
             assignment.url = '/homework/' + assignment._id;
-            assignment.userIds = assignment.courseId.userIds;
+            if(!assignment.private){
+                assignment.userIds = assignment.courseId.userIds;
+            }
             var dueDate = new Date(assignment.dueDate);
             assignment.dueDateF = dueDate.getDate()+"."+(dueDate.getMonth()+1)+"."+dueDate.getFullYear();
             var availableDate = new Date(assignment.availableDate);
-            assignment.availableDateF = availableDate.getDate()+"."+(availableDate.getMonth()+1)+"."+availableDate.getFullYear();
-
+            assignment.availableDateReached = availableDate.getTime() > Date.now();
             const submissionPromise = getSelectOptions(req, 'submissions', {
                 homeworkId: assignment._id,
                 $populate: ['studentId']
             });
             assignment.actions = getActions(assignment, '/homework/');
+            console.log(assignment);
             return assignment;
         });
         assignments = assignments.filter(function(n){ return n != undefined });
-        const coursesPromise = getSelectOptions(req, 'courses', {$or:[{
-            userIds: res.locals.currentUser._id
-        },{
-            teacherIds: res.locals.currentUser._id
-        }]});
+        const coursesPromise = getSelectOptions(req, 'courses', {$or:[
+            {userIds: res.locals.currentUser._id},
+            {teacherIds: res.locals.currentUser._id}
+        ]});
         Promise.resolve(coursesPromise).then(courses => {
-            res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments, courses});
+            const userPromise = getSelectOptions(req, 'users', {
+                _id: res.locals.currentUser._id,
+                $populate: ['roles']
+            });
+            Promise.resolve(userPromise).then(user => {
+                const roles = user[0].roles.map(role => {
+                    return role.name;
+                });
+                var isStudent = true;
+                if(roles.indexOf('student') == -1){
+                    isStudent = false;
+                }
+                res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments, courses, isStudent});
+            });
         });
 
     });
@@ -148,18 +164,23 @@ router.get('/:assignmentId', function (req, res, next) {
         Promise.resolve(submissionPromise).then(submissions => {
             if(assignment.courseId.userIds.indexOf(res.locals.currentUser._id) == -1
                 && assignment.teacherId != res.locals.currentUser._id){ return }
+            if(assignment.private
+                && assignment.teacherId != res.locals.currentUser._id){ return }
+            if(new Date(assignment.availableDate).getTime() > Date.now()
+                && assignment.teacherId != res.locals.currentUser._id){ return }
             assignment.submissions = submissions;
-            assignment.userIds = assignment.courseId.userIds;
+            if(!assignment.private){
+                assignment.userIds = assignment.courseId.userIds;
+            }
             var dueDate = new Date(assignment.dueDate);
             assignment.dueDateF = dueDate.getDate()+"."+(dueDate.getMonth()+1)+"."+dueDate.getFullYear();
-            var availableDate = new Date(assignment.availableDate);
-            assignment.availableDateF = availableDate.getDate()+"."+(availableDate.getMonth()+1)+"."+availableDate.getFullYear();
             //23:59 am Tag der Abgabe
             if (new Date(assignment.dueDate).getTime()+84340000 < Date.now()){
                 assignment.submittable = false;
             }else{
                 assignment.submittable = true;
             }
+            console.log(assignment);
             res.render('homework/assignment', Object.assign({}, assignment, {
                 title: assignment.courseId.name + ' - ' + assignment.name,
                 breadcrumb: [

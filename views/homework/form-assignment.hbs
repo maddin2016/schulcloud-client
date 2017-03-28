@@ -10,14 +10,19 @@
 <div class="form-group">
     <label>Kurs</label>
     <select name="courseId" required data-placeholder="Kurs auswählen">
+        <option value="" {{#if this.selected}}selected{{/if}}>Keine Zuordnung</option>
         {{#each courses}}
             <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
         {{/each}}
     </select>
-    <label>
-        <input name="private" type="checkbox" value="private" />
-        Private Aufgabe
-    </label>
+    {{#if isStudent}}
+        <input name="private" type="hidden" data-force-value="true" value="private" />
+    {{else}}
+        <label>
+            <input name="private" type="checkbox" value="private" />
+            Private Aufgabe (nur für mich sichtbar)
+        </label>
+    {{/if}}
 </div>
 
 <div class="form-group">
@@ -37,7 +42,7 @@
 
 <div class="form-group">
     <label>
-        <input name="private" type="checkbox" value="public" />
+        <input name="publicSubmissions" type="checkbox" value="public" checked />
         Schülerabgaben untereinander sichtbar
     </label>
 </div>
