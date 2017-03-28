@@ -101,8 +101,8 @@ router.patch('/:id', getUpdateHandler('homework'));
 router.get('/:id/json', getDetailHandler('homework'));
 router.delete('/:id', getDeleteHandler('homework'));
 
-router.patch('/submit/:id', getUpdateHandler('submission'));
-router.post('/submit', getUpdateHandler('submission'));
+router.patch('/submit/:id', getUpdateHandler('submissions'));
+router.post('/submit', getCreateHandler('submissions'));
 
 router.all('/', function (req, res, next) {
     api(req).get('/homework/', {
@@ -130,7 +130,6 @@ router.all('/', function (req, res, next) {
                 $populate: ['studentId']
             });
             assignment.actions = getActions(assignment, '/homework/');
-            console.log(assignment);
             return assignment;
         });
         assignments = assignments.filter(function(n){ return n != undefined });
@@ -165,8 +164,7 @@ router.get('/:assignmentId', function (req, res, next) {
         }
     }).then(assignment => {
         const submissionPromise = getSelectOptions(req, 'submissions', {
-            homeworkId: assignment._id,
-            $populate: ['studentId']
+            homeworkId: assignment._id
         });
         Promise.resolve(submissionPromise).then(submissions => {
             if(assignment.courseId.userIds.indexOf(res.locals.currentUser._id) == -1
@@ -175,11 +173,6 @@ router.get('/:assignmentId', function (req, res, next) {
                 && assignment.teacherId != res.locals.currentUser._id){ return }
             if(new Date(assignment.availableDate).getTime() > Date.now()
                 && assignment.teacherId != res.locals.currentUser._id){ return }
-            if(assignment.teacherId == res.locals.currentUser._id) {
-                assignment.submissions = submissions;
-            }else{
-                assignment.submission = submissions.filter(function(n){ return n.studentId._id == res.locals.currentUser._id })[0];
-            }
             if(!assignment.private){
                 assignment.userIds = assignment.courseId.userIds;
             }
@@ -191,17 +184,48 @@ router.get('/:assignmentId', function (req, res, next) {
             }else{
                 assignment.submittable = true;
             }
+            if(assignment.teacherId == res.locals.currentUser._id) {
+                assignment.submissions = submissions;
+                const coursePromise = getSelectOptions(req, 'courses', {
+                    _id: assignment.courseId._id,
+                    $populate: ['userIds']
+                });
+                Promise.resolve(coursePromise).then(courses => {
+                    var students = courses[0].userIds;
+                    students = students.map(student => {
+                        return {student: student,
+                            submission: assignment.submissions.filter(function(n){
+                                return n.studentId == student._id
+                            })[0]};
+                    });
+                    console.log(students);
+                    res.render('homework/assignment', Object.assign({}, assignment, {
+                        title: assignment.courseId.name + ' - ' + assignment.name,
+                        breadcrumb: [
+                            {
+                                title: 'Meine Aufgaben',
+                                url: '/homework'
+                            },
+                            {}
+                        ],
+                        students
+                    }));
+                });
+            }else{
+                assignment.submission = submissions.filter(function(n){ return n.studentId._id == res.locals.currentUser._id })[0];
+                res.render('homework/assignment', Object.assign({}, assignment, {
+                    title: assignment.courseId.name + ' - ' + assignment.name,
+                    breadcrumb: [
+                        {
+                            title: 'Meine Aufgaben',
+                            url: '/homework'
+                        },
+                        {}
+                    ]
+                }));
+            }
             console.log(assignment);
-            res.render('homework/assignment', Object.assign({}, assignment, {
-                title: assignment.courseId.name + ' - ' + assignment.name,
-                breadcrumb: [
-                    {
-                        title: 'Meine Aufgaben',
-                        url: '/homework'
-                    },
-                    {}
-                ]
-            }));
+
         });
 	});
 });

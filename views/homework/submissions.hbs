@@ -11,14 +11,20 @@
             <th/>
         </tr>
         </thead>
-        {{#each userIds}}
+        {{#each students}}
             <tbody class="usersubmission">
             <tr class="userinfo">
                 <td><img class="picture" src="https://randomuser.me/api/portraits/men/3.jpg" alt=""/></td>
-                <td>David</td>
-                <td>Dietrich</td>
-                <td><font color="green"><i class="fa fa-check" aria-hidden="true"/></font></td>
-                <td>{{this}}</td>
+                <td>{{this.student.firstName}}</td>
+                <td>{{this.student.lastName}}</td>
+                <td>
+                    {{#if this.submission}}
+                        <font color="green"><i class="fa fa-check" aria-hidden="true"/></font>
+                    {{else}}
+                        <font color="red"><i class="fa fa-times" aria-hidden="true"/></font>
+                    {{/if}}
+                </td>
+                <td>{{this.submission.grade}}</td>
                 <td><i class="fa fa-pencil-square-o" aria-hidden="true"/></td>
             </tr>
             <tr class="evaluation">
@@ -26,18 +32,5 @@
             </tr>
             </tbody>
         {{/each}}
-        <tbody class="usersubmission">
-        <tr class="userinfo">
-            <td><img class="picture" src="https://randomuser.me/api/portraits/women/11.jpg" alt=""/></td>
-            <td>Lisa</td>
-            <td>Hoppe</td>
-            <td><font color="red"><i class="fa fa-times" aria-hidden="true"/></font></td>
-            <td>2+</td>
-            <td><i class="fa fa-pencil-square-o" aria-hidden="true"/></td>
-        </tr>
-        <tr class="evaluation">
-            <td colSpan="6">{{>"homework/evaluation"}}</td>
-        </tr>
-        </tbody>
     </table>
 </section>
