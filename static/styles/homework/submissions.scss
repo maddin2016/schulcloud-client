@@ -44,6 +44,8 @@
 					padding: 5px 5px 5px 0;
 				}
 			}
+			.fa.green{color:green}
+			.fa.red{color:red}
 			@include media-breakpoint-down(xs) {
 				position:relative;
 				td{
