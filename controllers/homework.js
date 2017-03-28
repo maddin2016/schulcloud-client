@@ -74,10 +74,7 @@ const getUpdateHandler = (service) => {
 const getDetailHandler = (service) => {
     return function (req, res, next) {
         api(req).get('/' + service + '/' + req.params.id).then(
-			data => {
-				res.json(data);
-				//data["availableDate"]=data["availableDate"].slice(0,10);
-				//data["dueDate"]=data["dueDate"].slice(0,10);
+			data => {res.json(data);
 		}).catch(err => {
 			next(err);
 		});
