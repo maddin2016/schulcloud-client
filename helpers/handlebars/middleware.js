@@ -40,7 +40,7 @@ module.exports = (req, res, next) => {
         icon: 'table',
         link: '/calendar/'
     }, {
-        name: 'Hausaufgaben',
+        name: 'Aufgaben',
         icon: 'tasks',
         link: '/homework/'
     }, {
