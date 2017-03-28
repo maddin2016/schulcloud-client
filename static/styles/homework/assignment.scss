@@ -26,12 +26,15 @@
 	}
 	
 	.tab-link{
+		color: #000;
 		display:inline-block;
 		padding: 5px 10px 0;
 		margin-bottom: 15px;
 		border-bottom: 1px solid grey;
 		text-decoration:none;
 		&.active{
+			font-weight:700;
+			color: $colorHPIRed !important;
 			border-bottom-color: $colorHPIRed;
 		}
 	}
@@ -39,11 +42,7 @@
 		display:none;
 		width: 100%;
 		
-		&#extended:target,
-		&#submission:target,
-		&#submissions:target,
-		&#feedback:target,
-		.tab-content.active{
+		&.active{
 			display:block;
 		}
 		> h5{

@@ -2,16 +2,6 @@
 	{{#content "scripts" mode="append"}}
         <script type="text/javascript">
         $(document).ready(function(){
-
-			if(!window.location.hash){ window.location.hash="extended"}
-			
-			document.getElementById(window.location.hash.substr(1)+"-tab-link").classList.add("active");
-			
-			$(window).on('hashchange', function() {
-				document.getElementsByClassName("tab-link active")[0].classList.remove("active");
-				document.getElementById(window.location.hash.substr(1)+"-tab-link").classList.add("active");
-			});
-
 			$('.userinfo').click(function(){
                 $(this).parent('.usersubmission.active').addClass('clicked');
                 $('.usersubmission.active').removeClass('active');
@@ -21,14 +11,13 @@
                 $('.usersubmission td:last-of-type i').removeClass('fa-times').addClass('fa-pencil-square-o');
                 $('.usersubmission.active td:last-of-type i').removeClass('fa-pencil-square-o').addClass('fa-times');
             });
-			
-			$('.sub-tabs .tab-links .tab-link').click(function(){
-                $('.tab-link.active').removeClass('active');
+
+			$('.tab-view>.tab-links>.tab-link').click(function(){
+				var range = $(this).closest(".tab-view");
+                range.find('>.tab-links .tab-link.active').removeClass('active');
                 $(this).addClass('active');
-				
-                $('.tab-content.active').removeClass('active');
-				//console.log("Subtab-Click", "."+this.id.replace("-tab-link","")+" .tab-content");
-				$(".tabs"+" ."+this.id.replace("-tab-link","")+".tab-content").addClass('active');
+                range.find('>.tabs>.tab-content.active').removeClass('active');
+				range.find(">.tabs"+">#"+this.id.replace("-tab-link","")+".tab-content").addClass('active');
 			});
 			
 		});
@@ -42,32 +31,33 @@
 
         <section class="section-homework">
             <div class="due">{{dueDateF}}</div>
-
-			<nav class="tab-links">
-				<a href="#extended" id="extended-tab-link" class="tab-link">Details</a>
-                {{#if private}}
-                    <a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
-                {{else}}
-                    {{#ifvalue teacherId value=currentUser._id}}
-                        <a href="#submissions" id="submissions-tab-link" class="tab-link">Abgaben</a>
-                    {{else}}
-                        <a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
-                        <a href="#feedback" id="feedback-tab-link" class="tab-link">Feedback</a>
-                    {{/ifvalue}}
-                {{/if}}
-			</nav>
-			<div class="tabs">
-				{{> 'homework/extended'}}
-                {{#if private}}
-                    {{> 'homework/submission'}}
-                {{else}}
-                    {{#ifvalue teacherId value=currentUser._id}}
-                        {{> 'homework/submissions'}}
-                    {{else}}
-                        {{> 'homework/submission'}}
-                        {{> 'homework/feedback'}}
-                    {{/ifvalue}}
-                {{/if}}
+			<div class="tab-view">
+				<nav class="tab-links">
+					<a id="extended-tab-link" class="tab-link active">Details</a>
+					{{#if private}}
+						<a id="submission-tab-link" class="tab-link">Abgabe</a>
+					{{else}}
+						{{#ifvalue teacherId value=currentUser._id}}
+							<a id="submissions-tab-link" class="tab-link">Abgaben</a>
+						{{else}}
+							<a id="submission-tab-link" class="tab-link">Abgabe</a>
+							<a id="feedback-tab-link" class="tab-link">Feedback</a>
+						{{/ifvalue}}
+					{{/if}}
+				</nav>
+				<div class="tabs">
+					{{> 'homework/extended'}}
+					{{#if private}}
+						{{> 'homework/submission'}}
+					{{else}}
+						{{#ifvalue teacherId value=currentUser._id}}
+							{{> 'homework/submissions'}}
+						{{else}}
+							{{> 'homework/submission'}}
+							{{> 'homework/feedback'}}
+						{{/ifvalue}}
+					{{/if}}
+				</div>
 			</div>
         </section>
     {{/content}}
