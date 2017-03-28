@@ -2,6 +2,7 @@
     <nav class="tab-links">
 		<a id="submission-tab-link" class="tab-link active">Abgabe</a>
 		<a id="comment-tab-link" 	class="tab-link">Bewertung</a>
+		<a id="student-comment-tab-link" class="tab-link">Kommentare</a>
 	</nav>
 	<div class="tabs">
 		<div class="tab-content submission active">
@@ -46,6 +47,28 @@
 				</ul>
 			</div>
 			<button type="submit" class="btn btn-primary">Speichern</button>
+		</div>
+		
+		<div class="tab-content student-comment">
+			<div class="commentarea form-group">
+				<ul class="comments">
+					<li class="comment">
+						<img class="picture" src="https://randomuser.me/api/portraits/men/3.jpg" alt=""/>
+						<a class="btn btn-secondary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+						<b class="name">David Dietrich</b>
+						<p>Spicy jalapeno shoulder strip steak tenderloin jerky cow. Ground round cupim tail pork shank cow, shankle ball tip leberkas. Pancetta turkey cupim burgdoggen doner pig. Kevin alcatra tail frankfurter ribeye hamburger. Tri-tip pancetta flank rump sausage tongue kielbasa cupim chuck porchetta strip steak cow shankle turkey. Spare ribs shankle corned beef rump. Pork ham hock turducken, leberkas drumstick pork loin andouille short ribs ham biltong swine ribeye alcatra tongue.</p>
+					</li>
+					<li class="comment">
+						<img class="picture" src="https://randomuser.me/api/portraits/women/11.jpg" alt=""/>
+						<b class="name">Lisa Hoppe</b>
+						<p>Gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.</p>
+					</li>
+				</ul>
+				<div class="answer">
+					<textarea id="evaluation" type="text" class="form-control" placeholder="Enter comment here..." cols="5"></textarea>
+					<button type="submit" class="btn btn-primary">senden</button>
+				</div>
+			</div>
 		</div>
     </div>
 </section>

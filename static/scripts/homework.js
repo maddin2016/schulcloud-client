@@ -50,17 +50,19 @@ $(document).ready(function() {
 
     $('.btn-edit').on('click', function(e) {
         e.preventDefault();
-        var entry = $(this).attr('href');
-        $.getJSON(entry, function(result) {
-            populateModalForm($editModal, {
-                action: entry,
-                title: 'Bearbeiten',
-                closeLabel: 'Schließen',
-                submitLabel: 'Speichern',
-                fields: result
-            });
-            $editModal.modal('show');
+		var entry = $(this).attr('href');
+		$.getJSON(entry, function(result) {		//URL liefert kein JSON zurück --> code wird nicht augeführt
+			console.log("Result",result);
+			populateModalForm($editModal, {
+				// action: entry,
+				title: 'Bearbeiten',
+				closeLabel: 'Schließen',
+				submitLabel: 'Speichern',
+				fields: result
+			});
+			$editModal.modal('show');
         });
+		$editModal.modal('show'); //comment this out. Just to check if Modal can open
     });
 
     $modals.find('.close, .btn-close').on('click', function() {
