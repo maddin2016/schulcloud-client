@@ -7,7 +7,7 @@
 	<div class="tabs">
 		<div id="submission" class="tab-content active">
 			<div class="comment">
-				<p>{{this.comment}}</p>
+				<p>{{this.submission.comment}}</p>
 			</div>
 			<div class="material card">
 				<ul>
@@ -26,17 +26,33 @@
 		</div>
 
 		<div id="comment" class="tab-content">
+            <form class="form" method="post" action="/homework/submit/{{this.submission._id}}">
+            <input type="hidden" name="_method" data-force-value="true" value="patch" />
 			<div class="comment form-group">
 				<div class="form-group">
 					<label>Note</label>
-					<select name="grade" required data-placeholder="Note auswählen">
-						{{#each grades}}
-							<option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
-						{{/each}}
+					<select name="grade" data-placeholder="Note auswählen">
+                        <option value="">Keine Bewertung</option>
+                        <option value="15" {{#ifvalue this.submission.grade value=15}} selected {{/ifvalue}}>1+</option>
+                        <option value="14" {{#ifvalue this.submission.grade value=14}} selected {{/ifvalue}}>1</option>
+                        <option value="13" {{#ifvalue this.submission.grade value=13}} selected {{/ifvalue}}>1-</option>
+                        <option value="12" {{#ifvalue this.submission.grade value=12}} selected {{/ifvalue}}>2+</option>
+                        <option value="11" {{#ifvalue this.submission.grade value=11}} selected {{/ifvalue}}>2</option>
+                        <option value="10" {{#ifvalue this.submission.grade value=10}} selected {{/ifvalue}}>2-</option>
+                        <option value="9" {{#ifvalue this.submission.grade value=9}} selected {{/ifvalue}}>3+</option>
+                        <option value="8" {{#ifvalue this.submission.grade value=8}} selected {{/ifvalue}}>3</option>
+                        <option value="7" {{#ifvalue this.submission.grade value=7}} selected {{/ifvalue}}>3-</option>
+                        <option value="6" {{#ifvalue this.submission.grade value=6}} selected {{/ifvalue}}>4+</option>
+                        <option value="5" {{#ifvalue this.submission.grade value=5}} selected {{/ifvalue}}>4</option>
+                        <option value="4" {{#ifvalue this.submission.grade value=4}} selected {{/ifvalue}}>4-</option>
+                        <option value="3" {{#ifvalue this.submission.grade value=3}} selected {{/ifvalue}}>5+</option>
+                        <option value="2" {{#ifvalue this.submission.grade value=2}} selected {{/ifvalue}}>5</option>
+                        <option value="1" {{#ifvalue this.submission.grade value=1}} selected {{/ifvalue}}>5-</option>
+                        <option value="0" {{#ifvalue this.submission.grade value=0}} selected {{/ifvalue}}>6</option>
 					</select>
 				</div>
 				<h6>Kommentar</h6>
-				<textarea id="evaluation" type="text" class="form-control" placeholder="Enter Feedback here..." cols="10" defaultValue={this.get_EvaluationCommentByUser("id")}></textarea>
+				<textarea id="evaluation" name="gradeComment" type="text" class="form-control" placeholder="Bewertungskommentar">{{this.submission.gradeComment}}</textarea>
 			</div>
 			<h6>Dateien</h6>
 			<div class="material card">
@@ -47,6 +63,7 @@
 				</ul>
 			</div>
 			<button type="submit" class="btn btn-primary">Speichern</button>
+            </form>
 		</div>
 		
 		<div id="student-comment" class="tab-content">
