@@ -63,6 +63,7 @@ const getUpdateHandler = (service) => {
             // TODO: sanitize
             json: req.body
         }).then(data => {
+            console.log(req);
             res.redirect(req.header('Referer'));
     }).catch(err => {
             next(err);
@@ -100,6 +101,8 @@ router.delete('/:id', getDeleteHandler('homework'));
 
 router.patch('/submit/:id', getUpdateHandler('submissions'));
 router.post('/submit', getCreateHandler('submissions'));
+
+router.post('/comment', getCreateHandler('comments'));
 
 router.all('/', function (req, res, next) {
     api(req).get('/homework/', {
