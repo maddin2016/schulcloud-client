@@ -215,6 +215,7 @@ router.get('/:assignmentId', function (req, res, next) {
                 });
             }else{
                 assignment.submission = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0];
+                assignment.gradeComment = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0]["gradeComment"];
                 res.render('homework/assignment', Object.assign({}, assignment, {
                     title: assignment.courseId.name + ' - ' + assignment.name,
                     breadcrumb: [
