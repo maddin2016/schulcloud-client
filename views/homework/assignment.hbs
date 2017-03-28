@@ -42,6 +42,9 @@
 						{{else}}
 							<a id="submission-tab-link" class="tab-link">Abgabe</a>
 							<a id="feedback-tab-link" class="tab-link">Feedback</a>
+							{{#if publicSubmissions}}
+								<a id="submissions-tab-link" class="tab-link">Abgaben</a>
+							{{/if}}
 						{{/ifvalue}}
 					{{/if}}
 				</nav>
@@ -55,6 +58,9 @@
 						{{else}}
 							{{> 'homework/submission'}}
 							{{> 'homework/feedback'}}
+							{{#if publicSubmissions}}
+								{{> 'homework/submissions'}}
+							{{/if}}
 						{{/ifvalue}}
 					{{/if}}
 				</div>
