@@ -2,6 +2,7 @@
 	{{#content "scripts" mode="append"}}
         <script type="text/javascript">
         $(document).ready(function(){
+
 			if(!window.location.hash){ window.location.hash="extended"}
 			
 			document.getElementById(window.location.hash.substr(1)+"-tab-link").classList.add("active");

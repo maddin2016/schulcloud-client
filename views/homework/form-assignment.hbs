@@ -1,4 +1,4 @@
-<input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
+﻿<input name="schoolId" type="hidden" data-force-value="true" value="{{currentSchool}}" />
 
 <input name="teacherId" type="hidden" data-force-value="true" value="{{currentUser._id}}" />
 
@@ -13,7 +13,7 @@
         <option value="" {{#if this.selected}}selected{{/if}}>Keine Zuordnung</option>
         {{#each courses}}
             <option value="{{this._id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
-        {{/each}}
+        {{/each}}4034D9M
     </select>
     {{#if isStudent}}
         <input name="private" type="hidden" data-force-value="true" value="private" />
@@ -32,17 +32,17 @@
 
 <div class="form-group">
     <label>Bearbeitungszeit von</label>
-    <input class="form-control" name="availableDate" type="date" placeholder="dd.mm.yy" required />
+    <input class="form-control" name="availableDate" id="availableDate" type="date" required />
 </div>
 
 <div class="form-group">
     <label>bis</label>
-    <input class="form-control" name="dueDate" type="date" placeholder="dd.mm.yy" required />
+    <input class="form-control" name="dueDate" id="dueDate" type="date" required />
 </div>
 
 <div class="form-group">
     <label>
-        <input name="publicSubmissions" type="checkbox" value="public" checked />
+        <input name="publicSubmissions" type="checkbox" value="public" />
         Schülerabgaben untereinander sichtbar
     </label>
 </div>
