@@ -85,6 +85,7 @@
 		}
 		.assignment {
 			width: 100%;
+			position:relative;
 			/* max-width: 700px;
 			margin: 5px; */
 			padding: 10px;
@@ -136,8 +137,11 @@
 				}
 			}
 			.more{
-				/* display:block;*/
-				float:right;
+				/* display:block;
+				float:right;*/
+				position:absolute;
+				right: 10px;
+				bottom: 5px;
 				padding: 5px 0 5px 10px;
 				clear:both;
 				text-align:right;

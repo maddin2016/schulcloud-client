@@ -66,7 +66,6 @@ $(document).ready(function() {
 			});
 			$editModal.modal('show');
         });
-		$editModal.modal('show'); //comment this out. Just to check if Modal can open
     });
 
     $modals.find('.close, .btn-close').on('click', function() {
