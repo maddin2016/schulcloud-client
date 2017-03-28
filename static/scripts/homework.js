@@ -28,7 +28,9 @@ $(document).ready(function() {
                 case "radio":
                 case "checkbox":
                     $(this).each(function () {
-                        if ($(this).attr('name') == $(this).prop('name')) $(this).attr("checked", value);
+                        if (($(this).attr('name') == $(this).prop('name'))&&value){
+							$(this).attr("checked", value);
+						}
                     });
                     break;
 				case "date":
