@@ -126,6 +126,7 @@ router.all('/', function (req, res, next) {
                 homeworkId: assignment._id,
                 $populate: ['studentId']
             });
+			assignment.currentUser = res.locals.currentUser;
             assignment.actions = getActions(assignment, '/homework/');
             return assignment;
         });
