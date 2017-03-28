@@ -30,7 +30,7 @@ const getSelectOptions = (req, service, query, values = []) => {
 const getActions = (item, path) => {
     return [
         {
-            link: path + item._id,
+            link: path + item._id + "/json",
             class: 'btn-edit',
             icon: 'edit'
         },
@@ -73,11 +73,14 @@ const getUpdateHandler = (service) => {
 
 const getDetailHandler = (service) => {
     return function (req, res, next) {
-        api(req).get('/' + service + '/' + req.params.id).then(data => {
-            res.json(data);
-    }).catch(err => {
-            next(err);
-    });
+        api(req).get('/' + service + '/' + req.params.id).then(
+			data => {
+				res.json(data);
+				//data["availableDate"]=data["availableDate"].slice(0,10);
+				//data["dueDate"]=data["dueDate"].slice(0,10);
+		}).catch(err => {
+			next(err);
+		});
     };
 };
 
@@ -148,7 +151,7 @@ router.all('/', function (req, res, next) {
                 if(roles.indexOf('student') == -1){
                     isStudent = false;
                 }
-                res.render('homework/overview', {title: 'Meine Hausaufgaben', assignments, courses, isStudent});
+                res.render('homework/overview', {title: 'Meine Aufgaben', assignments, courses, isStudent});
             });
         });
 
@@ -193,14 +196,14 @@ router.get('/:assignmentId', function (req, res, next) {
                 title: assignment.courseId.name + ' - ' + assignment.name,
                 breadcrumb: [
                     {
-                        title: 'Meine Hausaufgaben',
+                        title: 'Meine Aufgaben',
                         url: '/homework'
                     },
                     {}
                 ]
             }));
         });
-});
+	});
 });
 
 module.exports = router;
