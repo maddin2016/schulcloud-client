@@ -44,21 +44,29 @@
 
 			<nav class="tab-links">
 				<a href="#extended" id="extended-tab-link" class="tab-link">Details</a>
-                {{#ifvalue teacherId value=currentUser._id}}
-                    <a href="#submissions" id="submissions-tab-link" class="tab-link">Abgaben</a>
-                {{else}}
+                {{#if private}}
                     <a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
-                    <a href="#feedback" id="feedback-tab-link" class="tab-link">Feedback</a>
-                {{/ifvalue}}
+                {{else}}
+                    {{#ifvalue teacherId value=currentUser._id}}
+                        <a href="#submissions" id="submissions-tab-link" class="tab-link">Abgaben</a>
+                    {{else}}
+                        <a href="#submission" id="submission-tab-link" class="tab-link">Abgabe</a>
+                        <a href="#feedback" id="feedback-tab-link" class="tab-link">Feedback</a>
+                    {{/ifvalue}}
+                {{/if}}
 			</nav>
 			<div class="tabs">
 				{{> 'homework/extended'}}
-                {{#ifvalue teacherId value=currentUser._id}}
-				    {{> 'homework/submissions'}}
+                {{#if private}}
+                    {{> 'homework/submission'}}
                 {{else}}
-				    {{> 'homework/submission'}}
-                    {{> 'homework/feedback'}}
-                {{/ifvalue}}
+                    {{#ifvalue teacherId value=currentUser._id}}
+                        {{> 'homework/submissions'}}
+                    {{else}}
+                        {{> 'homework/submission'}}
+                        {{> 'homework/feedback'}}
+                    {{/ifvalue}}
+                {{/if}}
 			</div>
         </section>
     {{/content}}
