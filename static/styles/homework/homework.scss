@@ -152,6 +152,11 @@
 					text-decoration: underline;
 				}
 			}
+			&.private{
+				h5{
+					color: limegreen;
+				}
+			}
 		}	
 	}
 }

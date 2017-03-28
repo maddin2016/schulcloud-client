@@ -118,6 +118,7 @@ router.all('/', function (req, res, next) {
             if(!assignment.private){
                 assignment.userIds = assignment.courseId.userIds;
             }
+			assignment.privateclass = assignment.private?"private":"";
 			assignment.publicSubmissions = assignment.publicSubmissions; 
             var dueDate = new Date(assignment.dueDate);
             assignment.dueDateF = dueDate.getDate()+"."+(dueDate.getMonth()+1)+"."+dueDate.getFullYear();
