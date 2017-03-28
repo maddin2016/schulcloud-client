@@ -98,6 +98,9 @@ router.patch('/:id', getUpdateHandler('homework'));
 router.get('/:id/json', getDetailHandler('homework'));
 router.delete('/:id', getDeleteHandler('homework'));
 
+router.patch('/submit/:id', getUpdateHandler('submission'));
+router.post('/submit', getUpdateHandler('submission'));
+
 router.all('/', function (req, res, next) {
     api(req).get('/homework/', {
         qs: {
@@ -169,7 +172,11 @@ router.get('/:assignmentId', function (req, res, next) {
                 && assignment.teacherId != res.locals.currentUser._id){ return }
             if(new Date(assignment.availableDate).getTime() > Date.now()
                 && assignment.teacherId != res.locals.currentUser._id){ return }
-            assignment.submissions = submissions;
+            if(assignment.teacherId == res.locals.currentUser._id) {
+                assignment.submissions = submissions;
+            }else{
+                assignment.submission = submissions.filter(function(n){ return n.studentId._id == res.locals.currentUser._id })[0];
+            }
             if(!assignment.private){
                 assignment.userIds = assignment.courseId.userIds;
             }
