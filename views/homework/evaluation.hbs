@@ -7,7 +7,7 @@
 	<div class="tabs">
 		<div id="submission" class="tab-content active">
 			<div class="comment">
-				<p>{{this.submission.comment}}</p>
+                <p>{{#if this.submission.comment}}{{this.submission.comment}}{{else}}Keine Abgabe.{{/if}}</p>
 			</div>
 			<div class="material card">
 				<ul>
@@ -26,8 +26,17 @@
 		</div>
 
 		<div id="comment" class="tab-content">
-            <form class="form" method="post" action="/homework/submit/{{this.submission._id}}">
-            <input type="hidden" name="_method" data-force-value="true" value="patch" />
+            {{#if this.submission}}
+                <form class="form" method="post" action="/homework/submit/{{this.submission._id}}">
+                    <input type="hidden" name="_method" data-force-value="true" value="patch" />
+            {{else}}
+                <form class="form" method="post" action="/homework/submit">
+                    <input type="hidden" name="_method" data-force-value="true" value="post" />
+                    <input name="schoolId" type="hidden" data-force-value="true" value="{{this.student.schoolId}}" />
+                    <input name="studentId" type="hidden" data-force-value="true" value="{{this.student._id}}" />
+                    <input name="homeworkId" type="hidden" data-force-value="true" value="{{@root._id}}" />
+            {{/if}}
+
 			<div class="comment form-group">
 				<div class="form-group">
 					<label>Note</label>

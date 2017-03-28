@@ -45,12 +45,11 @@ const getActions = (item, path) => {
 
 const getCreateHandler = (service) => {
     return function (req, res, next) {
-        console.log(req.body);
         api(req).post('/' + service + '/', {
             // TODO: sanitize
             json: req.body
         }).then(data => {
-            next();
+            res.redirect(req.header('Referer'));
     }).catch(err => {
             next(err);
     });
@@ -185,6 +184,9 @@ router.get('/:assignmentId', function (req, res, next) {
                 assignment.submittable = true;
             }
             if(assignment.teacherId == res.locals.currentUser._id) {
+                if(assignment.private){
+                    assignment.submission = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0];
+                }
                 assignment.submissions = submissions;
                 const coursePromise = getSelectOptions(req, 'courses', {
                     _id: assignment.courseId._id,
