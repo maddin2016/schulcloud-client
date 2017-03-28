@@ -45,6 +45,7 @@ const getActions = (item, path) => {
 
 const getCreateHandler = (service) => {
     return function (req, res, next) {
+        console.log(req.body);
         api(req).post('/' + service + '/', {
             // TODO: sanitize
             json: req.body
@@ -209,7 +210,7 @@ router.get('/:assignmentId', function (req, res, next) {
                     }));
                 });
             }else{
-                assignment.submission = submissions.filter(function(n){ return n.studentId._id == res.locals.currentUser._id })[0];
+                assignment.submission = submissions.filter(function(n){ return n.studentId == res.locals.currentUser._id })[0];
                 res.render('homework/assignment', Object.assign({}, assignment, {
                     title: assignment.courseId.name + ' - ' + assignment.name,
                     breadcrumb: [
@@ -221,8 +222,6 @@ router.get('/:assignmentId', function (req, res, next) {
                     ]
                 }));
             }
-            console.log(assignment);
-
         });
 	});
 });
