@@ -3,10 +3,13 @@
 	{{#content "styles" mode="append"}}
 		<link rel="stylesheet" href="/styles/content/search.css"/>
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/embed-js/4.2.1/embed.min.css" />
 	{{/content}}
 
 	{{#content "scripts" mode="append"}}
 		<script src="/scripts/chosen/chosen.jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/embed-js/4.2.1/embed.min.js"></script>
+		<script src="/scripts/content/content.js"></script>
 	{{/content}}
 
 	{{#content "page"}}
@@ -99,6 +102,12 @@
 							{{#if this.image}}
 								<img class="card-img-top" src="{{this.image}}"/>
 							{{/if}}
+								Test
+								<div class="card-preview" id="preview-{{this.originId}}">
+									{{this.url}}
+								</div>
+
+
 							<div class="card-block">
 								<h4 class="card-title">
 									<a href="{{this.url}}" target="_blank">
